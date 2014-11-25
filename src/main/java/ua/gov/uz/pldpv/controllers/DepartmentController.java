@@ -61,7 +61,7 @@ public class DepartmentController {
 	@RequestMapping(value = "/department", params = "add", method = RequestMethod.POST)
 	public String postAddCompany(
 			@RequestParam("company_id") long companyId,
-			@RequestParam String name, @RequestParam String director,Authentication auth) {
+			@RequestParam String name, @RequestParam String director) {
 		if(!accessConfirmation.accessConfirmation(companyId)) throw new AccessDeniedException("You have no permissions");
 		Company company = companyRepository
 				.findOne(companyId);
