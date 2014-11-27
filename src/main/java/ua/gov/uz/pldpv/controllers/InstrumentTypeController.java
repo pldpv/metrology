@@ -28,7 +28,11 @@ public class InstrumentTypeController {
 	@Autowired
 	SphereOfUseRepository sphereOfUseRepository;
 	
-	
+	@RequestMapping(value="instrumenttype",params="list",method=RequestMethod.GET)
+	public String getInstrumentTypeList(Model model){
+		model.addAttribute("instrumentTypes",instrumentTypeRepository.findAll());
+		return "admin/instrument/category/list";
+	}
 	@RequestMapping(value="instrumenttype",params="add",method=RequestMethod.GET)
 	public String getAddInstrumentType(@RequestParam("category_id") Long categoryId,Model model){
 		model.addAttribute("instrumentCategory", instrumentCategoryRepository.findOne(categoryId));
@@ -52,7 +56,7 @@ public class InstrumentTypeController {
 	public String postAddInstrumentType(@RequestParam Long categoryId,@RequestParam String type,@RequestParam("sphereofuse_id") Long sphereOfUseId) {
 		InstrumentCategory instrumentCategory=instrumentCategoryRepository.findOne(categoryId);
 		SphereOfUse sphereOfUse=sphereOfUseRepository.findOne(sphereOfUseId);
-		InstrumentType instrumentType = new InstrumentType(type,instrumentCategory,sphereOfUse);
+		InstrumentType instrumentType = new InstrumentType(type,instrumentCategory,null,sphereOfUse);
 		instrumentType = instrumentTypeRepository.save(instrumentType);
 		return "redirect:"+instrumentType.getUrl();
 	}

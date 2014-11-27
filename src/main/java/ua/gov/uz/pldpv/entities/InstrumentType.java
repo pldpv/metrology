@@ -1,8 +1,11 @@
 package ua.gov.uz.pldpv.entities;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class InstrumentType extends UrlEntity {
@@ -10,19 +13,28 @@ public class InstrumentType extends UrlEntity {
 	public InstrumentType() {
 	}
 
+
+
 	public InstrumentType(String instrumentType,
-			InstrumentCategory instrumentCategory, SphereOfUse sphereOfUse) {
+			InstrumentCategory instrumentCategory,
+			Set<InstrumentModel> instrumentModel, SphereOfUse sphereOfUse) {
 		this.instrumentType = instrumentType;
 		this.instrumentCategory = instrumentCategory;
+		this.instrumentModel = instrumentModel;
 		this.sphereOfUse = sphereOfUse;
 	}
+
+
 
 	@Column
 	private String instrumentType;
 
 	@ManyToOne
 	private InstrumentCategory instrumentCategory;
-
+	
+	@OneToMany(mappedBy = "instrumentType")
+	Set<InstrumentModel> instrumentModel;
+	
 	@ManyToOne
 	private SphereOfUse sphereOfUse;
 
@@ -48,5 +60,21 @@ public class InstrumentType extends UrlEntity {
 
 	public void setSphereOfUse(SphereOfUse sphereOfUse) {
 		this.sphereOfUse = sphereOfUse;
+	}
+
+
+
+	public Set<InstrumentModel> getInstrumentModel() {
+		return instrumentModel;
+	}
+
+
+
+	public void setInstrumentModel(Set<InstrumentModel> instrumentModel) {
+		this.instrumentModel = instrumentModel;
+	}
+	@Override
+	public String toString() {
+		return instrumentType;
 	}
 }

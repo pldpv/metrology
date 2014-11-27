@@ -5,6 +5,7 @@
 <head>
 <title>Нове ЗВТ</title>
 <jsp:include page="../include/common_css.jsp" />
+<script src="/resources/js/jquery.chained.remote.min.js"></script>
 </head>
 <body>
 	<h1>Нове ЗВТ</h1>
@@ -14,20 +15,23 @@
 			name="department_id">
 		<p>
 			Служба: <select id="railwayServiceList" name="railwayService_id"
-				onchange="changeCompaniesCombo()">
+				onchange="">
 			</select>
 		</p>
 		<p>
-			Підприємство: <select id="companyList" name="company_id" onchange="changeCompaniesCombo()">>
+			Підприємство: <select id="companyList" name="company_id" onchange="">>
 			</select>
 		</p>
 		<p>
 			Відділ: <select id="departmentList" name="department_id">
 			</select>
 		</p>
-		<p>Вид вимірювання</p>
-		<p>Назва ЗВТ</p>
-		<p>Тип ЗВТ</p>
+		<p>Вид вимірювання:<select id="instrumentCategoryList" name="instrumentCategory_id">
+			</select></p>
+		<p>Назва ЗВТ<select id="instrumentTypeList" name="instrumentType_id">
+			</select></p>
+		<p>Тип ЗВТ<select id="instrumentModelList" name="instrumentModel_id">
+			</select></p>
 		<p>Заводський номер</p>
 		<p>Рік випуску</p>
 		<p>Дата отримання ЗВТ</p>
@@ -54,41 +58,35 @@
 	$(document).ready(function() {
 		var railwayServiceList = document.getElementById("railwayServiceList");
 		var companyList = document.getElementById("companyList");
+		var departmentList = document.getElementById("departmentList");
+		
 		<c:forEach items="${railwayServices}" var="service" varStatus="loopStatus">
-		var option = new Option("${service.name}", "${service}");
+			var option = new Option("${service.name}", "${service}");
+			railwayServiceList.options.add(option);
+		</c:forEach>
+		
+		<c:forEach items="${companies}" var="company" varStatus="loopStatus">
+			var option = new Option("${company.name}", "${company}");
+			option.classList.add("${company.railwayService}")
+			companyList.options.add(option);
+			<c:forEach items="${company.departments}" var="department" varStatus="loopStatus">
+				var option = new Option("${department.name}", "${department.id}");
+				option.classList.add("${department.company}")
+				departmentList.options.add(option);
+			</c:forEach>
+		
+		</c:forEach>
+		
+		$("#companyList").chained("#railwayServiceList");
+		$("#departmentList").chained("#companyList");
+		
+		<c:forEach items="${instrumentCategory}" var="category" varStatus="loopStatus">
+		var option = new Option("${vategory.name}", "${category}");
 		railwayServiceList.options.add(option);
 		</c:forEach>
-		changeCompaniesCombo();
+	
 	});
 
-	function changeCompaniesCombo() {
 
-		var railwayServiceList = document.getElementById("railwayServiceList");
-		var companyList = document.getElementById("companyList");
-		var selected = railwayServiceList.value;
-		while (companyList.options.length) {
-			companyList.remove(0);
-		}
-		<c:forEach items="${companies}" var="company" varStatus="loopStatus">
-			if ("${company.railwayService}" == selected) {
-				var option = new Option("${company.name}", "${company}");
-				companyList.options.add(option);
-			}
-		</c:forEach>
-	}
-
-	function changeDepartmentCombo() {
-		var departmentList = document.getElementById("departmentList");
-		var companyList = document.getElementById("companyList");
-		var selected = companyList.value;
-
-		while (departmentList.options.length) {
-			departmentList.remove(0);
-		}
-		<c:forEach items="${selected.departments}" var="department" varStatus="loopStatus">
-			var option = new Option("${department.name}", "${department.id}");
-			companyList.options.add(option);
-		</c:forEach>
-	}
 </script>
 </html>
