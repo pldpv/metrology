@@ -1,14 +1,21 @@
+
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page language="java" contentModel="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <html>
 <head>
-<title>${instrumentModel.instrumentModel}</title>
+<title>${instrumentType.instrumentType}</title>
 </head>
 <body>
-	<h1>${instrumentModel.instrumentModel}</h1>
+	<h1>${instrumentType.instrumentType}</h1>
+	<ul>
+		<c:forEach var="instrumentModel" items="${instrumentType.instrumentModel}">
+			<li><a href="${instrumentModel.url}">${instrumentModel.instrumentModel}</a></li>
+		</c:forEach>
+	</ul>
+	<a href="${instrumentType.url}&edit">Редагувати ЗВТ</a>|
+	<a href="instrumentmodel?add&type_id=${instrumentType.id}">Новий вид</a>
+	<a href="instrumentcategory?list">До видів вимірювання</a>
 	
-	<a href="${instrumentModel.url}&edit">Редагувати ЗВТ</a>|
-	<a href="instrumenttype?list">До видів вимірювання</a>
 </body>
 </html>

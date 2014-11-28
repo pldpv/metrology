@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,7 +19,9 @@ import ua.gov.uz.pldpv.entities.Company;
 import ua.gov.uz.pldpv.entities.Department;
 import ua.gov.uz.pldpv.entities.Instrument;
 import ua.gov.uz.pldpv.repositories.CompanyRepository;
+import ua.gov.uz.pldpv.repositories.InstrumentCategoryRepository;
 import ua.gov.uz.pldpv.repositories.InstrumentRepository;
+import ua.gov.uz.pldpv.repositories.SphereOfUseRepository;
 
 @Controller
 @RolesAllowed({"COMPANY_ADMIN","ADMIN"})
@@ -28,12 +31,19 @@ public class InstrumentController {
 	@Autowired
 	CompanyRepository companyRepository;
 	@Autowired
-	AccessConfirmationController accessConfirmation;
+	InstrumentCategoryRepository instrumentCategoryRepository;
+	@Autowired
+	SphereOfUseRepository sphereOfUseRepository;
+	
+	@Autowired
+		AccessConfirmationController accessConfirmation;
 	
 	@RequestMapping(value="instrument",params="add",method=RequestMethod.GET)
 	public String getAddInstrument(Model model){
 		model.addAttribute("railwayServices",accessConfirmation.getUsersRailwayServices());
 		model.addAttribute("companies", accessConfirmation.getUserCompanies());
+		model.addAttribute("instrumentCategories",instrumentCategoryRepository.findAll());
+		model.addAttribute("spheresOfUse",sphereOfUseRepository.findAll());
 		return "instrument/add";
 	}
 	
@@ -60,7 +70,7 @@ public class InstrumentController {
 		model.addAttribute(instrument);
 		return "instrument/view";
 	}
-	
+	@Transactional
 	@RequestMapping(value="instrument",params="add",method=RequestMethod.POST)
 	public String postAddInstrument(){
 		

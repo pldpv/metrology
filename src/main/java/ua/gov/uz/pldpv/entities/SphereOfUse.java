@@ -4,6 +4,7 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -19,7 +20,7 @@ public class SphereOfUse extends BaseEntity {
 	}
 
 
-	@OneToMany(mappedBy = "sphereOfUse")
+	@OneToMany(mappedBy = "sphereOfUse",fetch=FetchType.EAGER)
 	private Set<InstrumentType> instrumenType;
 
 	public String getSphereOfUse() {

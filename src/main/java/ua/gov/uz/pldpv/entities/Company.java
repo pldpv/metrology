@@ -81,9 +81,5 @@ public class Company extends UrlEntity {
 	public void setRailwayService(RailwayService railwayService) {
 		this.railwayService = railwayService;
 	}
-	@Override
-	public String toString(){
-		return railwayService +" - "+this.name;
-	}
 
 }

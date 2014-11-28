@@ -36,8 +36,4 @@ public class InstrumentModel extends UrlEntity {
 	public void setInstrumentType(InstrumentType instrumentType) {
 		this.instrumentType = instrumentType;
 	}
-	@Override
-	public String toString() {
-		return instrumentModel;
-	}
 }

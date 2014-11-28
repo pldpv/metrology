@@ -25,12 +25,12 @@ public class InstrumentModelController {
 	SphereOfUseRepository sphereOfUseRepository;
 	
 	
-	@RequestMapping(value="instrumenttype",params="add",method=RequestMethod.GET)
+	@RequestMapping(value="instrumentmodel",params="add",method=RequestMethod.GET)
 	public String getAddInstrumentModel(@RequestParam("type_id") Long typeId,Model model){
 		model.addAttribute("instrumentType", instrumentTypeRepository.findOne(typeId));
 		return "admin/instrument/model/add";
 	}
-	@RequestMapping(value="instrumenttype",method=RequestMethod.GET)
+	@RequestMapping(value="instrumentmodel",method=RequestMethod.GET)
 	public String getViewInstrumentModel(@RequestParam Long id,Model model){
 		model.addAttribute("instrumentModel",instrumentModelRepository.findOne(id));
 		return "admin/instrument/model/view";
@@ -47,7 +47,7 @@ public class InstrumentModelController {
 		InstrumentType instrumentType=instrumentTypeRepository.findOne(typeId);
 		InstrumentModel instrumentModel = new InstrumentModel(model,instrumentType);
 		instrumentModel = instrumentModelRepository.save(instrumentModel);
-		return "redirect:"+instrumentModel.getUrl();
+		return "redirect:"+instrumentType.getUrl();
 	}
 	
 	@RequestMapping(value = "/instrumentmodel", params = "edit", method = RequestMethod.POST)

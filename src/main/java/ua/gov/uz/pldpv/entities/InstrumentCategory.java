@@ -46,9 +46,6 @@ public class InstrumentCategory extends UrlEntity {
 	public void setSphereOfUse(String category) {
 		this.category = category;
 	}
-	@Override
-	public String toString() {
-		return getId() + " - " + getCategory();
-	}
+	
 
 }

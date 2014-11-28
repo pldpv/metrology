@@ -70,9 +70,4 @@ public class Department extends UrlEntity {
 		this.company = company;
 	}
 
-	@Override
-	public String toString() {
-		return this.company.getRailwayService() + " - " + this.company + " - "
-				+ this.name;
-	}
 }

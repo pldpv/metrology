@@ -55,8 +55,5 @@ public class RailwayService extends UrlEntity {
 	public void setCompanies(Set<Company> companies) {
 		this.companies = companies;
 	}
-	@Override
-	public String toString(){
-		return this.name;
-	}
+	
 }
