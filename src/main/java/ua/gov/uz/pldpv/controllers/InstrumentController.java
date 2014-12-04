@@ -40,9 +40,13 @@ public class InstrumentController {
 	
 	@RequestMapping(value="instrument",params="add",method=RequestMethod.GET)
 	public String getAddInstrument(Model model){
+		System.out.println("Before service");
 		model.addAttribute("railwayServices",accessConfirmation.getUsersRailwayServices());
+		System.out.println("Before company");
 		model.addAttribute("companies", accessConfirmation.getUserCompanies());
+		System.out.println("Before category");
 		model.addAttribute("instrumentCategories",instrumentCategoryRepository.findAll());
+		System.out.println("Before sphere");
 		model.addAttribute("spheresOfUse",sphereOfUseRepository.findAll());
 		return "instrument/add";
 	}

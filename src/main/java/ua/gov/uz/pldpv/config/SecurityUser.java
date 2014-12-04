@@ -12,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import ua.gov.uz.pldpv.entities.Company;
+import ua.gov.uz.pldpv.entities.RailwayService;
 import ua.gov.uz.pldpv.entities.Role;
 import ua.gov.uz.pldpv.entities.User;
 
@@ -23,6 +24,8 @@ public class SecurityUser extends User implements UserDetails {
 		if (user != null) {
 			this.setId(user.getId());
 			this.setUserName(user.getUserName());
+			this.setRailwayService(user.getRailwayService());
+			this.setVersion(user.getVersion());
 			this.setCompany(user.getCompany());
 			this.setPassword(user.getPassword());
 			this.setRole(user.getRole());
@@ -74,5 +77,10 @@ public class SecurityUser extends User implements UserDetails {
 	@Override
 	public String getUsername() {
 		return super.getUserName();
+	}
+
+	@Override
+	public RailwayService getRailwayService() {
+		return super.getRailwayService();
 	}
 }

@@ -1,5 +1,13 @@
 package ua.gov.uz.pldpv.config;
+import java.io.IOException;
+
 import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+
 import org.springframework.core.annotation.Order;
 import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter;
 import org.springframework.web.filter.DelegatingFilterProxy;
@@ -28,8 +36,8 @@ public class MessageWebApplicationInitializer extends
 
     @Override
     protected Filter[] getServletFilters() {
-    return new Filter[]{
-    new DelegatingFilterProxy("springSecurityFilterChain"),
+    	return new Filter[]{
+   	new DelegatingFilterProxy("springSecurityFilterChain"),
     new OpenEntityManagerInViewFilter()};
     }
     

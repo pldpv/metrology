@@ -5,6 +5,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -21,7 +22,7 @@ public class Company extends UrlEntity {
 	@NotBlank
 	private String director;
 	
-	@OneToMany(mappedBy = "company",cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "company",fetch=FetchType.EAGER,cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<Department> departments;
 	
 	@OneToMany(mappedBy = "company",cascade = CascadeType.ALL)

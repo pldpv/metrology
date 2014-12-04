@@ -11,9 +11,11 @@ public class Verification extends CheckInstrument {
 	}
 
 	public Verification(Organization organization, Date currentCheck,
-			Integer periodicity, Date nextCheck, Float actualCost) {
-		super(organization, currentCheck, periodicity, nextCheck, actualCost);
+			Integer periodicity, Float actualCost, String paymentInformation) {
+		super(organization, currentCheck, periodicity, actualCost, paymentInformation);
 	}
+
+	
 
 	
 }

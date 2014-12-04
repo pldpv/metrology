@@ -17,111 +17,168 @@
 		<input type="hidden" name="add"> <input type="hidden"
 			name="department_id">
 		<p>
-			Служба: <select id="railwayServiceList" name="railwayService_id"></select>
+			Служба: <select id="railwayServiceList" ></select>
 		</p>
 		<p>
-			Підприємство: <select id="companyList" name="company_id"></select>
+			Підприємство: <select id="companyList" ></select>
 		</p>
 		<p>
-			Відділ: <select id="departmentList" name="department_id"></select>
+			Відділ: <select id="departmentList" name="department_id" required></select>
 		</p>
 		<p>
-			Вид вимірювання: <select id="instrumentCategoryList" name="instrumentCategory_id"></select>
+			Вид вимірювання: <select id="instrumentCategoryList"
+				name="instrumentCategory_id" required></select>
 		</p>
-		<p>Назва ЗВТ: <select id="instrumentTypeList" name="instrumentType_id"></select></p>
-		<p>Тип ЗВТ: <select id="instrumentModelList" name="instrumentModel_id">
-			</select></p>
-		<p>Заводський номер: <input type="text" name="serialNumber" autocomplete="off"></p>
-		<p>Рік випуску: <select name="produtionYear" id="produtionYear"></select></p>
-		<p>Дата отримання ЗВТ: <input type="text" id="receiptDate"></p>
-		<p>Де встановлено, використовується ЗВТ: <input type="text" name="location" autocomplete="off"></p>
-		<p>Сфера застосування: <select id="sphereOfUseList" name="sphereOfUse_id">
-			</select></p>
+		<p>
+			Назва ЗВТ: <select id="instrumentTypeList" name="instrumentType_id" required></select>
+		</p>
+		<p>
+			Тип ЗВТ: <select id="instrumentModelList" name="instrumentModel_id" required>
+			</select>
+		</p>
+		<p>
+			Заводський номер: <input type="number" step="0.01" name="serialNumber"
+				autocomplete="off" required>
+		</p>
+		<p>
+			Рік випуску: <select name="produtionYear" id="produtionYear" required></select>
+		</p>
+		<p>
+			Дата отримання ЗВТ: <input type="text" id="receiptDate" required>
+		</p>
+		<p>
+			Де встановлено, використовується ЗВТ: <input type="text"
+				name="location" autocomplete="off" required>
+		</p>
+		<p>
+			Сфера застосування: <select id="sphereOfUseList"
+				name="sphereOfUse_id" required>
+			</select>
+		</p>
 		<p>Технічний стан ЗВТ:</p>
-		<p>ЗВТ, що калібруються</p>
-		<p>ЗВТ, що повіряються</p>
+		<p>
+			ЗВТ, що калібруються <input type="checkbox" id="calibrationCb">
+		</p>
+		<div id="calibration">
+			<p>Організація</p>
+			<p>
+				Дата: <input type="text" id="calibrationDate" name="calibrationDate" >
+			</p>
+			<p>
+				Фактична вартісь<input type="number" name="actualCostCalibration"
+					autocomplete="off">
+			</p>
+			<p>Номер рахунку та дата його видачі <input type="text" name="actualCostCalibration"
+					autocomplete="off"></p>
+		</div>
+		
+		<p>
+			ЗВТ, що повіряються<input type="checkbox" id="verificationCb">
+		</p>
+		<div id="verification">
 		<p>Організація</p>
-		<p>Дата: <input type="text" id="calibrationDate" name="calibrationDate"></p>
-		<p>Фактична вартісь<input type="text" name="actualCost" autocomplete="off"></p>
+		<p>
+			Дата<input type="text" id="verificationDate" name="verificationDate">
+		</p>
+		<p>Фактична вартісь<input type="number" name="actualCostVerification"
+					autocomplete="off"></p>
 		<p>Номер рахунку та дата його видачі</p>
-		<p>Організація</p>
-		<p>Дата<input type="text" id="verificationDate" name="verificationDate"></p>
-		<p>Фактична вартісь</p>
-		<p>Номер рахунку та дата його видачі</p>
-
+		</div>
 		<input type="submit" value="add">
 	</form>
 	<a href="railwayservice?list">До списку служб</a>
 </body>
 
 <script>
-	$(document).ready(function() {
-		var railwayServiceList = document.getElementById("railwayServiceList");
-		var companyList = document.getElementById("companyList");
-		var departmentList = document.getElementById("departmentList");
-		var sphereOfUseList = document.getElementById("sphereOfUseList");
-		
-		<c:forEach items="${railwayServices}" var="service" varStatus="loopStatus">
-			var option = new Option("${service.name}", "${service}");
-			railwayServiceList.options.add(option);
-		</c:forEach>
-		
-		<c:forEach items="${companies}" var="company" varStatus="loopStatus">
-			var option = new Option("${company.name}", "${company}");
-			option.classList.add("${company.railwayService}")
-			companyList.options.add(option);
-			<c:forEach items="${company.departments}" var="department" varStatus="loopStatus">
-				var option = new Option("${department.name}", "${department.id}");
-				option.classList.add("${department.company}")
-				departmentList.options.add(option);
-			</c:forEach>
-		
-		</c:forEach>
-		
-		<c:forEach items="${instrumentCategories}" var="category" varStatus="loopStatus">
-			var option = new Option("${category.category}", "${category}");
-			instrumentCategoryList.options.add(option);
-		
-			<c:forEach items="${category.instrumentType}" var="type" varStatus="loopStatus">
-				var option = new Option("${type.instrumentType}", "${type}");
-				option.classList.add("${type.instrumentCategory}")
-				instrumentTypeList.options.add(option);
-				
-				<c:forEach items="${type.instrumentModel}" var="model" varStatus="loopStatus">
-					var option = new Option("${model.instrumentModel}", "${model.id}");
-					option.classList.add("${model.instrumentType}")
-					instrumentModelList.options.add(option);
-				</c:forEach>
-			
-			</c:forEach>
-		</c:forEach>
-		
-		<c:forEach items="${spheresOfUse}" var="sphereOfUse" varStatus="loopStatus">
-			var o = new Option("${sphereOfUse.sphereOfUse}", "${sphereOfUse.id}");
-			sphereOfUseList.options.add(o);
-			<c:forEach items="${sphereOfUse.instrumenType}" var="instrumenType" varStatus="loopStatus">
-				o.classList.add("${instrumenType}")
-			</c:forEach>
-			
-		</c:forEach>
+	$(document)
+			.ready(
+					function() {
+						var railwayServiceList = document
+								.getElementById("railwayServiceList");
+						var companyList = document
+								.getElementById("companyList");
+						var departmentList = document
+								.getElementById("departmentList");
+						var sphereOfUseList = document
+								.getElementById("sphereOfUseList");
 
-		$("#companyList").chained("#railwayServiceList");
-		$("#departmentList").chained("#companyList");
-		$("#instrumentTypeList").chained("#instrumentCategoryList");
-		$("#instrumentModelList").chained("#instrumentTypeList");
-		$("#sphereOfUseList").chained("#instrumentTypeList");
-		
-		for (i = new Date().getFullYear(); i > 1970; i--)
-		{
-		    $('#produtionYear').append($('<option />').val(i).html(i));
-		}
-	});
-	 $(function() {
-		    $('#receiptDate').datepicker({maxDate:new Date()});
-		    $('#calibrationDate').datepicker({maxDate:new Date()});
-		    $('#verificationDate').datepicker({maxDate:new Date()});
-	});
+						<c:forEach items="${railwayServices}" var="service" varStatus="loopStatus">
+						var option = new Option("${service.name}", "${service}");
+						railwayServiceList.options.add(option);
+						</c:forEach>
+
+						<c:forEach items="${companies}" var="company" varStatus="loopStatus">
+						var option = new Option("${company.name}", "${company}");
+						option.classList.add("${company.railwayService}")
+						companyList.options.add(option);
+						<c:forEach items="${company.departments}" var="department" varStatus="loopStatus">
+						var option = new Option("${department.name}",
+								"${department.id}");
+						option.classList.add("${department.company}")
+						departmentList.options.add(option);
+						</c:forEach>
+
+						</c:forEach>
+
+						<c:forEach items="${instrumentCategories}" var="category" varStatus="loopStatus">
+						var option = new Option("${category.category}",
+								"${category}");
+						instrumentCategoryList.options.add(option);
+
+						<c:forEach items="${category.instrumentType}" var="type" varStatus="loopStatus">
+						var option = new Option("${type.instrumentType}",
+								"${type}");
+						option.classList.add("${type.instrumentCategory}")
+						instrumentTypeList.options.add(option);
+
+						<c:forEach items="${type.instrumentModel}" var="model" varStatus="loopStatus">
+						var option = new Option("${model.instrumentModel}",
+								"${model.id}");
+						option.classList.add("${model.instrumentType}")
+						instrumentModelList.options.add(option);
+						</c:forEach>
+
+						</c:forEach>
+						</c:forEach>
+
+						<c:forEach items="${spheresOfUse}" var="sphereOfUse" varStatus="loopStatus">
+						var o = new Option("${sphereOfUse.sphereOfUse}",
+								"${sphereOfUse.id}");
+						sphereOfUseList.options.add(o);
+						<c:forEach items="${sphereOfUse.instrumenType}" var="instrumenType" varStatus="loopStatus">
+						o.classList.add("${instrumenType}")
+						</c:forEach>
+
+						</c:forEach>
+
+						$("#companyList").chained("#railwayServiceList");
+						$("#departmentList").chained("#companyList");
+						$("#instrumentTypeList").chained(
+								"#instrumentCategoryList");
+						$("#instrumentModelList")
+								.chained("#instrumentTypeList");
+						$("#sphereOfUseList").chained("#instrumentTypeList");
+
+						for (i = new Date().getFullYear(); i > 1970; i--) {
+							$('#produtionYear').append(
+									$('<option />').val(i).html(i));
+						}
+						$('#receiptDate').datepicker({maxDate:new Date()});
+						$('#calibrationDate').datepicker({maxDate:new Date()});
+						$('#verificationDate').datepicker({maxDate:new Date()});
+						checkInstrument("calibrationCb","calibration");
+						checkInstrument("verificationCb","verification")
+					});
+	function checkInstrument(checkBoxId,divClass){
+			$('#'+divClass).hide();
+			$('#'+checkBoxId).change(function () {
+		        if (!this.checked)
+		           $('#'+divClass).fadeOut('slow');
+		        else 
+		            $('#'+divClass).fadeIn('slow');
+		    });
+
+	}
 	
-
 </script>
 </html>

@@ -15,15 +15,10 @@ public class Organization extends BaseEntity {
 			Set<CheckInstrument> checkInstrument) {
 		this.name = name;
 		this.checkType = checkType;
-		this.checkInstrument = checkInstrument;
+//		this.checkInstrument = checkInstrument;
 	}
 
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
+
 
 	@Column
 	private String name;
@@ -34,8 +29,8 @@ public class Organization extends BaseEntity {
 	 */
 	@Column
 	private Integer checkType;
-	@OneToMany(mappedBy = "organization")
-	private Set<CheckInstrument> checkInstrument;
+//	@OneToMany(mappedBy = "organization")
+//	private Set<CheckInstrument> checkInstrument;
 
 	public Integer getCheckType() {
 		return checkType;
@@ -43,12 +38,17 @@ public class Organization extends BaseEntity {
 	public void setCheckType(Integer checkType) {
 		this.checkType = checkType;
 	}
-	public Set<CheckInstrument> getCheckInstrument() {
-		return checkInstrument;
+//	public Set<CheckInstrument> getCheckInstrument() {
+//		return checkInstrument;
+//	}
+//	public void setCheckInstrument(Set<CheckInstrument> checkInstrument) {
+//		this.checkInstrument = checkInstrument;
+//	}
+	public String getName() {
+		return name;
 	}
-	public void setCheckInstrument(Set<CheckInstrument> checkInstrument) {
-		this.checkInstrument = checkInstrument;
+	public void setName(String name) {
+		this.name = name;
 	}
-
 
 }

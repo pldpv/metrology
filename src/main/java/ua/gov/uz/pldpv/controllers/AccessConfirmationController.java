@@ -41,10 +41,11 @@ class AccessConfirmationController {
 		SecurityUser userDetails = getSecurityUser();
 		RailwayService railwayService=userDetails.getRailwayService();
 		Company company=userDetails.getCompany();
-		
-		if (company!=null) list.add(company);
-		else if (company==null&&railwayService!=null) list.addAll(railwayService.getCompanies());
-		else list.addAll(companyRepository.findAll());
+		if (company!=null){
+			list.add(company);
+		}else if (company==null&&railwayService!=null){
+			list.addAll(railwayService.getCompanies());
+		}else list.addAll(companyRepository.findAll());
 		return list;
 	}
 	
@@ -57,6 +58,7 @@ class AccessConfirmationController {
 		List<RailwayService> list=new ArrayList<RailwayService>();
 		SecurityUser userDetails = getSecurityUser();
 		RailwayService railwayService=userDetails.getRailwayService();
+		
 		if (railwayService==null){
 			list.addAll(railawyServiceRepository.findAll());
 		}else{

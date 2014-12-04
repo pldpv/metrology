@@ -7,8 +7,13 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.Any;
+import org.hibernate.annotations.AnyMetaDef;
+import org.hibernate.annotations.ManyToAny;
+import org.hibernate.annotations.MetaValue;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
@@ -18,18 +23,26 @@ public abstract class CheckInstrument extends BaseEntity {
 	public CheckInstrument() {
 	}
 
-	public CheckInstrument(Organization organization, Date currentCheck,
-			Integer periodicity, Date nextCheck, Float actualCost) {
+	public CheckInstrument(Object organization, Date currentCheck,
+			Integer periodicity, Float actualCost,
+			String paymentInformation) {
+
 		this.organization = organization;
 		this.currentCheck = currentCheck;
 		this.periodicity = periodicity;
-		nextCheckCalculation();
 		this.actualCost = actualCost;
+		this.paymentInformation = paymentInformation;
+		nextCheckCalculation();
 	}
-
-	@ManyToOne
-	private Organization organization;
-
+    @Any(metaColumn = @Column(name = "organization"))
+    @AnyMetaDef(idType = "long", metaType = "string", 
+            metaValues = {
+             @MetaValue(targetEntity = Department.class, value = "D"),
+             @MetaValue(targetEntity = Organization.class, value = "O"),
+       })
+    @JoinColumn(name="organization_id")
+    private Object organization;
+	
 	@Column(nullable = false)
 	@NotBlank
 	private Date currentCheck;
@@ -42,12 +55,14 @@ public abstract class CheckInstrument extends BaseEntity {
 
 	@Column(nullable = false)
 	private Float actualCost;
-
-	public Organization getOrganization() {
+	@Column 
+	private String paymentInformation;
+	
+	public Object getOrganization() {
 		return organization;
 	}
 
-	public void setOrganization(Organization organization) {
+	public void setOrganization(Object organization) {
 		this.organization = organization;
 	}
 
@@ -90,6 +105,14 @@ public abstract class CheckInstrument extends BaseEntity {
 		cal.setTime(currentCheck);
 		cal.add(Calendar.MONTH, periodicity);
 		setNextCheck(cal.getTime());
+	}
+
+	public String getPaymentInformation() {
+		return paymentInformation;
+	}
+
+	public void setPaymentInformation(String paymentInformation) {
+		this.paymentInformation = paymentInformation;
 	}
 
 }

@@ -46,6 +46,12 @@
 			<version>4.3.0.Final</version>
 
 		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-annotations</artifactId>
+			<version>3.5.6-Final</version>
+		</dependency>
+
 
 		<!-- json object mapper -->
 		<dependency>
@@ -91,11 +97,11 @@
 			<version>2.2</version>
 		</dependency>
 		<dependency>
-	<groupId>org.springframework</groupId>
-	<artifactId>spring-aop</artifactId>
-	<version>4.1.0.RELEASE</version>
-</dependency>
-		
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<version>4.1.0.RELEASE</version>
+		</dependency>
+
 		<!-- logging -->
 		<dependency>
 			<groupId>org.slf4j</groupId>

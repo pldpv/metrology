@@ -5,6 +5,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -15,14 +16,17 @@ public class RailwayService extends UrlEntity {
 	@Column(nullable=false)
 	@NotBlank
 	private String name;
-	
+
 	@Column(nullable=false)
 	@NotBlank
 	private String director;
 
-	@OneToMany(mappedBy = "railwayService", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "railwayService",fetch=FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<Company> companies;
-
+	
+	@OneToMany(mappedBy = "railwayService",cascade = CascadeType.ALL)
+	private Set<User> users;
+	
 	public RailwayService() {
 	}
 
@@ -54,6 +58,14 @@ public class RailwayService extends UrlEntity {
 
 	public void setCompanies(Set<Company> companies) {
 		this.companies = companies;
+	}
+
+	public Set<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(Set<User> users) {
+		this.users = users;
 	}
 	
 }
