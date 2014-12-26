@@ -20,6 +20,7 @@ public class InstrumentCategory extends UrlEntity {
 
 	@Column
 	private String category;
+	
 	@OneToMany(mappedBy = "instrumentCategory")
 	private Set<InstrumentType> instrumentType;
 

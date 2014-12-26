@@ -1,10 +1,14 @@
 package ua.gov.uz.pldpv.entities;
 
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
 
 @Entity
 public class Instrument extends BaseEntity {
@@ -13,8 +17,9 @@ public class Instrument extends BaseEntity {
 
 	public Instrument(Long serialNumber, Date receiptDate, String location,
 			Date productionYear, String instrumentModel, Department department,
-			InstrumentType instrumentType, Calibration calibration,
-			Verification verification, TechnicalState technicalState) {
+			InstrumentType instrumentType,
+			Set<CheckInstrument> instrumentCheck, TechnicalState technicalState) {
+		super();
 		this.serialNumber = serialNumber;
 		this.receiptDate = receiptDate;
 		this.location = location;
@@ -22,11 +27,9 @@ public class Instrument extends BaseEntity {
 		this.instrumentModel = instrumentModel;
 		this.department = department;
 		this.instrumentType = instrumentType;
-		this.calibration = calibration;
-		this.verification = verification;
+		this.instrumentCheck = instrumentCheck;
 		this.technicalState = technicalState;
 	}
-
 	@Column
 	private Long serialNumber;
 	@Column
@@ -42,10 +45,11 @@ public class Instrument extends BaseEntity {
 
 	@ManyToOne
 	private InstrumentType instrumentType;
-	@ManyToOne
-	private Calibration calibration;
-	@ManyToOne
-	private Verification verification;
+	
+	@OneToMany(mappedBy="instrument",fetch =FetchType.EAGER)
+	@OrderColumn(name="currentCheck")
+	private Set<CheckInstrument> instrumentCheck;
+	
 	@ManyToOne
 	private TechnicalState technicalState;
 
@@ -97,28 +101,35 @@ public class Instrument extends BaseEntity {
 		this.instrumentType = instrumentType;
 	}
 
-	public Calibration getCalibration() {
-		return calibration;
-	}
-
-	public void setCalibration(Calibration calibration) {
-		this.calibration = calibration;
-	}
-
-	public Verification getVerification() {
-		return verification;
-	}
-
-	public void setVerification(Verification verification) {
-		this.verification = verification;
-	}
-
+	
 	public TechnicalState getTechnicalState() {
 		return technicalState;
 	}
 
 	public void setTechnicalState(TechnicalState technicalState) {
 		this.technicalState = technicalState;
+	}
+
+	public String getInstrumentModel() {
+		return instrumentModel;
+	}
+
+	public void setInstrumentModel(String instrumentModel) {
+		this.instrumentModel = instrumentModel;
+	}
+
+
+
+	public void setInstrumentType(InstrumentType instrumentType) {
+		this.instrumentType = instrumentType;
+	}
+
+	public Set<CheckInstrument> getInstrumentCheck() {
+		return instrumentCheck;
+	}
+
+	public void setInstrumentCheck(Set<CheckInstrument> instrumentCheck) {
+		this.instrumentCheck = instrumentCheck;
 	}
 
 }

@@ -5,15 +5,14 @@ import java.util.Date;
 import javax.persistence.Entity;
 
 @Entity
-public class Calibration extends CheckInstrument{
+public class Calibration extends CheckInstrument {
 
+	public Calibration(Object organization, Date currentCheck,
+			Integer periodicity, Date nextCheck, Float actualCost,
+			String paymentInformation, String imagePath, Instrument instrument) {
+		super(organization, currentCheck, periodicity, nextCheck, actualCost,
+				paymentInformation, imagePath, instrument);
 
-	public Calibration(Organization organization, Date currentCheck,
-			Integer periodicity, Float actualCost,
-			String paymentInformation) {
-		super(organization, currentCheck, periodicity, actualCost,
-				paymentInformation);
-		// TODO Auto-generated constructor stub
 	}
 
 	public Calibration() {

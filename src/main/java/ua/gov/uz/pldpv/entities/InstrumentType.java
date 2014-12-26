@@ -14,8 +14,6 @@ public class InstrumentType extends UrlEntity {
 	public InstrumentType() {
 	}
 
-
-
 	public InstrumentType(String instrumentType,
 			InstrumentCategory instrumentCategory,
 			Set<InstrumentModel> instrumentModel, SphereOfUse sphereOfUse) {
@@ -24,8 +22,6 @@ public class InstrumentType extends UrlEntity {
 		this.instrumentModel = instrumentModel;
 		this.sphereOfUse = sphereOfUse;
 	}
-
-
 
 	@Column
 	private String instrumentType;

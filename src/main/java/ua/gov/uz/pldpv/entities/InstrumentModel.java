@@ -2,6 +2,7 @@ package ua.gov.uz.pldpv.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 
 @Entity
@@ -11,7 +12,7 @@ public class InstrumentModel extends UrlEntity {
 	
 	@ManyToOne
 	private InstrumentType instrumentType;
-
+	
 	public InstrumentModel() {
 		
 	}
@@ -36,4 +37,5 @@ public class InstrumentModel extends UrlEntity {
 	public void setInstrumentType(InstrumentType instrumentType) {
 		this.instrumentType = instrumentType;
 	}
+
 }

@@ -12,7 +12,6 @@ import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.Any;
 import org.hibernate.annotations.AnyMetaDef;
-import org.hibernate.annotations.ManyToAny;
 import org.hibernate.annotations.MetaValue;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -24,25 +23,26 @@ public abstract class CheckInstrument extends BaseEntity {
 	}
 
 	public CheckInstrument(Object organization, Date currentCheck,
-			Integer periodicity, Float actualCost,
-			String paymentInformation) {
+			Integer periodicity, Date nextCheck, Float actualCost,
+			String paymentInformation, String imagePath, Instrument instrument) {
 
 		this.organization = organization;
 		this.currentCheck = currentCheck;
 		this.periodicity = periodicity;
 		this.actualCost = actualCost;
 		this.paymentInformation = paymentInformation;
-		nextCheckCalculation();
+		this.imagePath = imagePath;
+		this.instrument = instrument;
+        nextCheckCalculation();
 	}
-    @Any(metaColumn = @Column(name = "organization"))
-    @AnyMetaDef(idType = "long", metaType = "string", 
-            metaValues = {
-             @MetaValue(targetEntity = Department.class, value = "D"),
-             @MetaValue(targetEntity = Organization.class, value = "O"),
-       })
-    @JoinColumn(name="organization_id")
-    private Object organization;
-	
+
+	@Any(metaColumn = @Column(name = "organization"))
+	@AnyMetaDef(idType = "long", metaType = "string", metaValues = {
+			@MetaValue(targetEntity = CheckDepartment.class, value = "D"),
+			@MetaValue(targetEntity = Organization.class, value = "O"), })
+	@JoinColumn(name = "organization_id")
+	private Object organization;
+
 	@Column(nullable = false)
 	@NotBlank
 	private Date currentCheck;
@@ -55,9 +55,16 @@ public abstract class CheckInstrument extends BaseEntity {
 
 	@Column(nullable = false)
 	private Float actualCost;
-	@Column 
+
+	@Column
 	private String paymentInformation;
+
+	@Column
+	private String imagePath;
 	
+	@ManyToOne
+	private Instrument instrument;
+
 	public Object getOrganization() {
 		return organization;
 	}
@@ -88,7 +95,7 @@ public abstract class CheckInstrument extends BaseEntity {
 		return nextCheck;
 	}
 
-	public void setNextCheck(Date nextCheck) {
+	private void setNextCheck(Date nextCheck) {
 		this.nextCheck = nextCheck;
 	}
 
@@ -99,8 +106,8 @@ public abstract class CheckInstrument extends BaseEntity {
 	public void setActualCost(Float actualCost) {
 		this.actualCost = actualCost;
 	}
-	
-	private void nextCheckCalculation(){
+
+	private void nextCheckCalculation() {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(currentCheck);
 		cal.add(Calendar.MONTH, periodicity);
@@ -113,6 +120,22 @@ public abstract class CheckInstrument extends BaseEntity {
 
 	public void setPaymentInformation(String paymentInformation) {
 		this.paymentInformation = paymentInformation;
+	}
+
+	public String getImagePath() {
+		return imagePath;
+	}
+
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
+
+	public Instrument getInstrument() {
+		return instrument;
+	}
+
+	public void setInstrument(Instrument instrument) {
+		this.instrument = instrument;
 	}
 
 }

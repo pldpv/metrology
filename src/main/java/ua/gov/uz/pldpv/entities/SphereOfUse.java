@@ -9,18 +9,19 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class SphereOfUse extends BaseEntity {
-	@Column
-	private String sphereOfUse;
 
 	public SphereOfUse() {
 	}
+
 	public SphereOfUse(String sphereOfUse, Set<InstrumentType> instrumenType) {
 		this.sphereOfUse = sphereOfUse;
 		this.instrumenType = instrumenType;
 	}
 
+	@Column
+	private String sphereOfUse;
 
-	@OneToMany(mappedBy = "sphereOfUse",fetch=FetchType.EAGER)
+	@OneToMany(mappedBy = "sphereOfUse", fetch = FetchType.EAGER)
 	private Set<InstrumentType> instrumenType;
 
 	public String getSphereOfUse() {
@@ -30,11 +31,13 @@ public class SphereOfUse extends BaseEntity {
 	public void setSphereOfUse(String sphereOfUse) {
 		this.sphereOfUse = sphereOfUse;
 	}
+
 	public Set<InstrumentType> getInstrumenType() {
 		return instrumenType;
 	}
+
 	public void setInstrumenType(Set<InstrumentType> instrumenType) {
 		this.instrumenType = instrumenType;
 	}
-	
+
 }

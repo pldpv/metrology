@@ -37,7 +37,7 @@
 			</select>
 		</p>
 		<p>
-			Заводський номер: <input type="number" step="0.01" name="serialNumber"
+			Заводський номер: <input type="number" name="serialNumber"
 				autocomplete="off" required>
 		</p>
 		<p>
@@ -55,12 +55,16 @@
 				name="sphereOfUse_id" required>
 			</select>
 		</p>
-		<p>Технічний стан ЗВТ:</p>
+		<p>Технічний стан ЗВТ:<select id="technicalStateList"
+				name="technicalState_id" required>
+			</select></p>
 		<p>
 			ЗВТ, що калібруються <input type="checkbox" id="calibrationCb">
 		</p>
 		<div id="calibration">
-			<p>Організація</p>
+			<p>Організація:<select id="calibrationOrganizationList"
+				name="calibrationOrganization_id" required>
+			</select></p>
 			<p>
 				Дата: <input type="text" id="calibrationDate" name="calibrationDate" >
 			</p>
@@ -76,13 +80,16 @@
 			ЗВТ, що повіряються<input type="checkbox" id="verificationCb">
 		</p>
 		<div id="verification">
-		<p>Організація</p>
+		<p>Організація<select id="verificationOrganizationList"
+				name="verificationOrganization_id" required>
+			</select></p>
 		<p>
 			Дата<input type="text" id="verificationDate" name="verificationDate">
 		</p>
 		<p>Фактична вартісь<input type="number" name="actualCostVerification"
 					autocomplete="off"></p>
-		<p>Номер рахунку та дата його видачі</p>
+		<p>Номер рахунку та дата його видачі<input type="text" name="actualCostVerification"
+					autocomplete="off"></p>
 		</div>
 		<input type="submit" value="add">
 	</form>

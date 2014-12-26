@@ -5,12 +5,15 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Department extends UrlEntity {
 
 	@Column(nullable = false)
