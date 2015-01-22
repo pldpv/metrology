@@ -25,6 +25,7 @@ import ua.gov.uz.pldpv.repositories.SphereOfUseRepository;
 
 @Controller
 @RolesAllowed({"COMPANY_ADMIN","ADMIN"})
+@RequestMapping("instrument")
 public class InstrumentController {
 	@Autowired
 	InstrumentRepository instrumentRepository;
@@ -38,7 +39,7 @@ public class InstrumentController {
 	@Autowired
 		AccessConfirmationController accessConfirmation;
 	
-	@RequestMapping(value="instrument",params="add",method=RequestMethod.GET)
+	@RequestMapping(params="add",method=RequestMethod.GET)
 	public String getAddInstrument(Model model){
 		System.out.println("Before service");
 		model.addAttribute("railwayServices",accessConfirmation.getUsersRailwayServices());
@@ -51,12 +52,12 @@ public class InstrumentController {
 		return "instrument/add";
 	}
 	
-	@RequestMapping(value="instrument",params="all",method=RequestMethod.GET)
+	@RequestMapping(params="all",method=RequestMethod.GET)
 	public String getAllInstrument(Model model){
 		model.addAttribute("instruments",instrumentRepository.findByDepartmentIn(accessConfirmation.getDepartmentsForAuthenticateUser()));
 		return "instrument/list";
 	}
-	@RequestMapping(value="instrument",params="edit",method=RequestMethod.GET)
+	@RequestMapping(params="edit",method=RequestMethod.GET)
 	public String getEditInstrument(@RequestParam Long id,Model model){
 		Instrument instrument=instrumentRepository.findOne(id);
 		if (!accessConfirmation.accessConfirmation(instrument.getDepartment().getCompany().getId()))
@@ -66,7 +67,7 @@ public class InstrumentController {
 		return "instrument/edit";
 	}
 	
-	@RequestMapping(value="instrument",params="view",method=RequestMethod.GET)
+	@RequestMapping(params="view",method=RequestMethod.GET)
 	public String getViewInstrument(@RequestParam Long id, Model model){
 		Instrument instrument=instrumentRepository.findOne(id);
 		if (!accessConfirmation.accessConfirmation(instrument.getDepartment().getCompany().getId()))
@@ -75,10 +76,8 @@ public class InstrumentController {
 		return "instrument/view";
 	}
 	@Transactional
-	@RequestMapping(value="instrument",params="add",method=RequestMethod.POST)
+	@RequestMapping(params="add",method=RequestMethod.POST)
 	public String postAddInstrument(){
-		
-		
 		return "instrument/add";
 	}
 	

@@ -13,24 +13,24 @@ public class CheckDepartment extends Department {
 
 	public CheckDepartment(String name, String director,
 			Set<Instrument> instruments, Company company,
-			Set<InstrumentModel> instrumentModel, String certificatePath) {
+			Set<InstrumentType> instrumentType, String certificatePath) {
 		super(name, director, instruments, company);
-		this.instrumentModel = instrumentModel;
+		this.instrumentType = instrumentType;
 		this.certificatePath = certificatePath;
 	}
 
 	@OneToMany
-	private Set<InstrumentModel> instrumentModel;
+	private Set<InstrumentType> instrumentType;
 	
 	@Column
 	private String certificatePath;
 
-	public Set<InstrumentModel> getInstrumentModel() {
-		return instrumentModel;
+	public Set<InstrumentType> getInstrumentModel() {
+		return instrumentType;
 	}
 
-	public void setInstrumentModel(Set<InstrumentModel> instrumentModel) {
-		this.instrumentModel = instrumentModel;
+	public void setInstrumentModel(Set<InstrumentType> instrumentType) {
+		this.instrumentType = instrumentType;
 	}
 
 	public String getCertificatePath() {

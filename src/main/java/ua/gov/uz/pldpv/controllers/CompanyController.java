@@ -17,6 +17,7 @@ import ua.gov.uz.pldpv.repositories.RailwayServiceRepository;
 
 @Controller
 @RolesAllowed({"ADMIN","SERVICE_ADMIN"})
+@RequestMapping("/company")
 public class CompanyController {
 	@Autowired
 	AccessConfirmationController accessConfirmation;
@@ -25,7 +26,7 @@ public class CompanyController {
 	@Autowired
 	CompanyRepository companyRepository;
 	
-	@RequestMapping(value = "/company", params = "add", method = RequestMethod.GET)
+	@RequestMapping(params = "add", method = RequestMethod.GET)
 	public String getAddCompany(
 			@RequestParam("railwayService_id") long railwayServiceId,
 			Model model) {
@@ -34,21 +35,21 @@ public class CompanyController {
 		return "admin/company/add";
 	}
 	
-	@RequestMapping(value = "/company", params = "edit", method = RequestMethod.GET)
+	@RequestMapping(params = "edit", method = RequestMethod.GET)
 	public String getEditCompany(@RequestParam long id, Model model) {
 		Company company = companyRepository.findOne(id);
 		model.addAttribute("company", company);
 		return "admin/company/edit";
 	}
 	@RolesAllowed({"ADMIN","SERVICE_ADMIN","COMPANY_ADMIN"})
-	@RequestMapping(value = "/company", method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET)
 	public String getViewCompany(@RequestParam long id, Model model) {
 		if (!accessConfirmation.accessConfirmation(id)) throw new AccessDeniedException("You have no permissions");
 		model.addAttribute("company", companyRepository.findOne(id));
 		return "admin/company/view";
 	}
 
-	@RequestMapping(value = "/company", params = "add", method = RequestMethod.POST)
+	@RequestMapping(params = "add", method = RequestMethod.POST)
 	public String postAddCompany(
 			@RequestParam("railwayService_id") long railwayServiceId,
 			@RequestParam String name, @RequestParam String director) {
@@ -60,7 +61,7 @@ public class CompanyController {
 		return "redirect:" + company.getUrl();
 	}
 
-	@RequestMapping(value = "/company", params = "edit", method = RequestMethod.POST)
+	@RequestMapping(params = "edit", method = RequestMethod.POST)
 	public String postEditCompany(@RequestParam long id,
 			@RequestParam String name, @RequestParam String director) {
 		Company company = companyRepository.findOne(id);
@@ -70,7 +71,7 @@ public class CompanyController {
 		return "redirect:" + company.getUrl();
 	}
 
-	@RequestMapping(value = "/company", params = "delete", method = RequestMethod.POST)
+	@RequestMapping(params = "delete", method = RequestMethod.POST)
 	public String postDeleteCompany(@RequestParam long id) {
 		Company company=companyRepository.findOne(id);
 		companyRepository.delete(company);

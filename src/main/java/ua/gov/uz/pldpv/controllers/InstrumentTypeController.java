@@ -20,6 +20,7 @@ import ua.gov.uz.pldpv.repositories.SphereOfUseRepository;
 
 @Controller
 @RolesAllowed({"ADMIN"})
+@RequestMapping("instrumenttype")
 public class InstrumentTypeController {
 	@Autowired
 	InstrumentCategoryRepository instrumentCategoryRepository;
@@ -28,31 +29,31 @@ public class InstrumentTypeController {
 	@Autowired
 	SphereOfUseRepository sphereOfUseRepository;
 	
-	@RequestMapping(value="instrumenttype",params="list",method=RequestMethod.GET)
+	@RequestMapping(params="list",method=RequestMethod.GET)
 	public String getInstrumentTypeList(Model model){
 		model.addAttribute("instrumentTypes",instrumentTypeRepository.findAll());
 		return "admin/instrument/category/list";
 	}
-	@RequestMapping(value="instrumenttype",params="add",method=RequestMethod.GET)
+	@RequestMapping(params="add",method=RequestMethod.GET)
 	public String getAddInstrumentType(@RequestParam("category_id") Long categoryId,Model model){
 		model.addAttribute("instrumentCategory", instrumentCategoryRepository.findOne(categoryId));
 		model.addAttribute("spheresOfUse",sphereOfUseRepository.findAll());
 		return "admin/instrument/type/add";
 	}
-	@RequestMapping(value="instrumenttype",method=RequestMethod.GET)
+	@RequestMapping(method=RequestMethod.GET)
 	public String getViewInstrumentType(@RequestParam Long id,Model model){
 		model.addAttribute("instrumentType",instrumentTypeRepository.findOne(id));
 		return "admin/instrument/type/view";
 	}
 	
-	@RequestMapping(value = "/instrumenttype", params = "edit", method = RequestMethod.GET)
+	@RequestMapping(params = "edit", method = RequestMethod.GET)
 	public String getEditInstrumentType(@RequestParam long id,Model model) {
 		model.addAttribute("instrumentType", instrumentTypeRepository.findOne(id));
 		model.addAttribute("spheresOfUse",sphereOfUseRepository.findAll());
 		return "admin/instrument/type/edit";
 	}
 	
-	@RequestMapping(value = "/instrumenttype", params = "add", method = RequestMethod.POST)
+	@RequestMapping(params = "add", method = RequestMethod.POST)
 	public String postAddInstrumentType(@RequestParam Long categoryId,@RequestParam String type,@RequestParam("sphereofuse_id") Long sphereOfUseId) {
 		InstrumentCategory instrumentCategory=instrumentCategoryRepository.findOne(categoryId);
 		SphereOfUse sphereOfUse=sphereOfUseRepository.findOne(sphereOfUseId);
@@ -61,7 +62,7 @@ public class InstrumentTypeController {
 		return "redirect:"+instrumentType.getUrl();
 	}
 	
-	@RequestMapping(value = "/instrumenttype", params = "edit", method = RequestMethod.POST)
+	@RequestMapping(params = "edit", method = RequestMethod.POST)
 	public String postEditInstrumentType(@RequestParam long id,@RequestParam String type,@RequestParam("sphereofuse_id") Long sphereOfUseId) {
 		InstrumentType instrumentType = instrumentTypeRepository.findOne(id);
 		instrumentType.setInstrumentType(type);
@@ -70,7 +71,7 @@ public class InstrumentTypeController {
 		return "redirect:"+instrumentType.getUrl();
 	}
 	
-	@RequestMapping(value = "/instrumenttype", params = "delete", method = RequestMethod.POST)
+	@RequestMapping(params = "delete", method = RequestMethod.POST)
 	public String postDeleteInstrumentType(@RequestParam long id) {
 		instrumentTypeRepository.delete(id);
 		return "redirect:instrumentcategory?list";

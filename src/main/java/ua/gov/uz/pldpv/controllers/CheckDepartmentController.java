@@ -1,27 +1,28 @@
 package ua.gov.uz.pldpv.controllers;
 
+import java.util.List;
+
 import javax.annotation.security.RolesAllowed;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import ua.gov.uz.pldpv.config.SecurityUser;
 import ua.gov.uz.pldpv.entities.Company;
 import ua.gov.uz.pldpv.entities.Department;
 import ua.gov.uz.pldpv.repositories.CompanyRepository;
 import ua.gov.uz.pldpv.repositories.DepartmentRepository;
+import ua.gov.uz.pldpv.repositories.InstrumentTypeRepository;
 import ua.gov.uz.pldpv.repositories.RailwayServiceRepository;
 
 @Controller
 @RolesAllowed({"ADMIN","SERVICE_ADMIN","COMPANY_ADMIN"})
-@RequestMapping("department")
-public class DepartmentController {
+@RequestMapping("checkdepartment")
+public class CheckDepartmentController {
 	@Autowired
 	AccessConfirmationController accessConfirmation;
 	@Autowired
@@ -30,6 +31,8 @@ public class DepartmentController {
 	CompanyRepository companyRepository;
 	@Autowired
 	DepartmentRepository departmentRepository;
+	@Autowired
+	InstrumentTypeRepository instrumentTypeRepo;
 	
 	@RequestMapping(params = "add", method = RequestMethod.GET)
 	public String getAddDepartment(
@@ -38,7 +41,8 @@ public class DepartmentController {
 		if (!accessConfirmation.accessConfirmation(companyId)) throw new AccessDeniedException("You have no permissions");
 		model.addAttribute("company",
 				companyRepository.findOne(companyId));
-		return "admin/department/add";
+		model.addAttribute("instrumentType",instrumentTypeRepo.findAll());
+		return "admin/instrument/checkdepartment/add";
 	}
 	
 	@RequestMapping(params = "edit", method = RequestMethod.GET)
@@ -62,7 +66,8 @@ public class DepartmentController {
 	@RequestMapping(params = "add", method = RequestMethod.POST)
 	public String postAddCompany(
 			@RequestParam("company_id") long companyId,
-			@RequestParam String name, @RequestParam String director) {
+			@RequestParam String name, @RequestParam String director,@RequestParam List typeselect) {
+		System.out.print(typeselect);
 		if(!accessConfirmation.accessConfirmation(companyId)) throw new AccessDeniedException("You have no permissions");
 		Company company = companyRepository
 				.findOne(companyId);

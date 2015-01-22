@@ -15,44 +15,45 @@ import ua.gov.uz.pldpv.repositories.RailwayServiceRepository;
 
 @Controller
 @RolesAllowed({"ADMIN"})
+@RequestMapping("railwayservice")
 public class RailwayServiceController {
 	
 	@Autowired
 	RailwayServiceRepository railwayServiceRepository;
 	
-	@RequestMapping(value = "/railwayservice", params = "list", method = RequestMethod.GET)
+	@RequestMapping(params = "list", method = RequestMethod.GET)
 	public String getRailwayServiceList(Model model) {
 		model.addAttribute("railwayServices",
 				railwayServiceRepository.findAll());
 		return "admin/railwayService/list";
 	}
 	
-	@RequestMapping(value = "/railwayservice", method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET)
 	public String getViewRailwayService(@RequestParam long id, Model model) {
 		model.addAttribute("railwayService", railwayServiceRepository.findOne(id));
 		return "admin/railwayService/view";
 	}
 	
-	@RequestMapping(value = "/railwayservice", params = "add", method = RequestMethod.GET)
+	@RequestMapping(params = "add", method = RequestMethod.GET)
 	public String getAddRailwayService() {
 		return "admin/railwayService/add";
 	}
 	
-	@RequestMapping(value = "/railwayservice", params = "edit", method = RequestMethod.GET)
+	@RequestMapping(params = "edit", method = RequestMethod.GET)
 	public String getEditRailwayService(@RequestParam long id,Model model) {
 		RailwayService railwayService=railwayServiceRepository.findOne(id);
 		model.addAttribute("railwayService", railwayService);
 		return "admin/railwayService/edit";
 	}
 	
-	@RequestMapping(value = "/railwayservice", params = "add", method = RequestMethod.POST)
+	@RequestMapping(params = "add", method = RequestMethod.POST)
 	public String postAddRailwayService(@RequestParam String name,@RequestParam String director) {
 		RailwayService railwayService = new RailwayService(name,director, null);
 		railwayService = railwayServiceRepository.save(railwayService);
 		return "redirect:"+railwayService.getUrl();
 	}
 	
-	@RequestMapping(value = "/railwayservice", params = "edit", method = RequestMethod.POST)
+	@RequestMapping(params = "edit", method = RequestMethod.POST)
 	public String postEditRailwayService(@RequestParam long id,@RequestParam String name,@RequestParam String director) {
 		RailwayService railwayService = railwayServiceRepository.findOne(id);
 		railwayService.setName(name);
@@ -61,7 +62,7 @@ public class RailwayServiceController {
 		return "redirect:"+railwayService.getUrl();
 	}
 	
-	@RequestMapping(value = "/railwayservice", params = "delete", method = RequestMethod.POST)
+	@RequestMapping(params = "delete", method = RequestMethod.POST)
 	public String postDeleteRailwayService(@RequestParam long id) {
 		railwayServiceRepository.delete(id);
 		return "redirect:railwayservice?list";

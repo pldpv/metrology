@@ -14,7 +14,7 @@
 		</c:forEach>
 	</ul>
 	<a href="${instrumentType.url}&edit">Редагувати ЗВТ</a>|
-	<a href="instrumentmodel?add&type_id=${instrumentType.id}">Новий вид</a>
+	<a href="instrumentmodel?add&type_id=${instrumentType.id}">Нова модель</a>
 	<a href="instrumentcategory?list">До видів вимірювання</a>
 	
 </body>

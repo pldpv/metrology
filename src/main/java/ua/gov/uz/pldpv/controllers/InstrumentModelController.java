@@ -16,6 +16,7 @@ import ua.gov.uz.pldpv.repositories.InstrumentTypeRepository;
 import ua.gov.uz.pldpv.repositories.SphereOfUseRepository;
 @Controller
 @RolesAllowed("ADMIN")
+@RequestMapping("instrumentmodel")
 public class InstrumentModelController {
 	@Autowired
 	InstrumentTypeRepository instrumentTypeRepository;
@@ -25,24 +26,24 @@ public class InstrumentModelController {
 	SphereOfUseRepository sphereOfUseRepository;
 	
 	
-	@RequestMapping(value="instrumentmodel",params="add",method=RequestMethod.GET)
+	@RequestMapping(params="add",method=RequestMethod.GET)
 	public String getAddInstrumentModel(@RequestParam("type_id") Long typeId,Model model){
 		model.addAttribute("instrumentType", instrumentTypeRepository.findOne(typeId));
 		return "admin/instrument/model/add";
 	}
-	@RequestMapping(value="instrumentmodel",method=RequestMethod.GET)
+	@RequestMapping(method=RequestMethod.GET)
 	public String getViewInstrumentModel(@RequestParam Long id,Model model){
 		model.addAttribute("instrumentModel",instrumentModelRepository.findOne(id));
 		return "admin/instrument/model/view";
 	}
 	
-	@RequestMapping(value = "/instrumentmodel", params = "edit", method = RequestMethod.GET)
+	@RequestMapping(params = "edit", method = RequestMethod.GET)
 	public String getEditInstrumentModel(@RequestParam long id,Model model) {
 		model.addAttribute("instrumentModel", instrumentModelRepository.findOne(id));
 		return "admin/instrument/model/edit";
 	}
 	
-	@RequestMapping(value = "/instrumentmodel", params = "add", method = RequestMethod.POST)
+	@RequestMapping(params = "add", method = RequestMethod.POST)
 	public String postAddInstrumentModel(@RequestParam Long typeId,@RequestParam String model) {
 		InstrumentType instrumentType=instrumentTypeRepository.findOne(typeId);
 		InstrumentModel instrumentModel = new InstrumentModel(model,instrumentType);
@@ -50,7 +51,7 @@ public class InstrumentModelController {
 		return "redirect:"+instrumentType.getUrl();
 	}
 	
-	@RequestMapping(value = "/instrumentmodel", params = "edit", method = RequestMethod.POST)
+	@RequestMapping(params = "edit", method = RequestMethod.POST)
 	public String postEditInstrumentModel(@RequestParam long id,@RequestParam String model) {
 		InstrumentModel instrumentModel = instrumentModelRepository.findOne(id);
 		instrumentModel.setInstrumentModel(model);
@@ -58,7 +59,7 @@ public class InstrumentModelController {
 		return "redirect:"+instrumentModel.getUrl();
 	}
 	
-	@RequestMapping(value = "/instrumentmodel", params = "delete", method = RequestMethod.POST)
+	@RequestMapping(params = "delete", method = RequestMethod.POST)
 	public String postDeleteInstrumentModel(@RequestParam long id) {
 		instrumentModelRepository.delete(id);
 		return "redirect:instrumenttype?list";
