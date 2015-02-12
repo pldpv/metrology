@@ -5,16 +5,26 @@
 <title>Нове підриєство</title>
 </head>
 <body>
-	<h1>Нове підриєство</h1>
-	<form action="company" method="post">
-	<input type="hidden" name="add">
-	<input type="hidden" name="railwayService_id" value="${railwayService.id}">
-	<ul>
-		<li>Назва: <input type="text" name="name" autocomplete="off"></li>
-		<li>Начальник: <input type="text" name="director" autocomplete="off"></li>
-	</ul>
-	<input type="submit" value="add">
+	<form class="form-horizontal" action="company" method="post">
+		<input type="hidden" name="add"> 
+		<input type="hidden" name="railwayService_id" value="${railwayService.id}">
+		<div class="form-group form-group-sm">
+			<label class="control-label col-sm-4" for="inputName">Назва</label> 
+			<div class="col-sm-8">
+				<input class="form-control" type="text" id="inputName" name="name" autocomplete="off">
+			</div>
+		</div> 
+		<div class="form-group form-group-sm">
+			<label class="control-label col-sm-4" for="inputDirector">Начальник	підприємства</label> 
+			<div class="col-sm-8">
+				<input class="form-control" type="text" id ="inputDirector" name="director" autocomplete="off">
+			</div>
+		</div>
+		<div class="form-group form-group-sm">
+			<div class="col-md-9 col-md-offset-9">
+				<button type="submit" class="btn btn-success">Зберегти</button>
+			</div>
+		</div>
 	</form>
-	<a href="${railwayService.url}">До ${railwayService.name}</a>
 </body>
 </html>

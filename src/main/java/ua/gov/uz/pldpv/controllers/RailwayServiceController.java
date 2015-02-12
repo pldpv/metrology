@@ -50,7 +50,7 @@ public class RailwayServiceController {
 	public String postAddRailwayService(@RequestParam String name,@RequestParam String director) {
 		RailwayService railwayService = new RailwayService(name,director, null);
 		railwayService = railwayServiceRepository.save(railwayService);
-		return "redirect:"+railwayService.getUrl();
+		return "redirect:railwayservice?list";
 	}
 	
 	@RequestMapping(params = "edit", method = RequestMethod.POST)
@@ -59,10 +59,10 @@ public class RailwayServiceController {
 		railwayService.setName(name);
 		railwayService.setDirector(director);
 		railwayService = railwayServiceRepository.save(railwayService);
-		return "redirect:"+railwayService.getUrl();
+		return "redirect:railwayservice?list";
 	}
 	
-	@RequestMapping(params = "delete", method = RequestMethod.POST)
+	@RequestMapping(params = "delete", method = RequestMethod.GET)
 	public String postDeleteRailwayService(@RequestParam long id) {
 		railwayServiceRepository.delete(id);
 		return "redirect:railwayservice?list";

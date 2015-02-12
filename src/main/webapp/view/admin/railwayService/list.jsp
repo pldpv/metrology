@@ -4,32 +4,37 @@
 <html>
 <head>
 <title>Служби Залізниці</title>
-<jsp:include page="../../include/common_css.jsp" />
 </head>
 <body>
-	<h1>Служби Залізниці</h1>
-	<ul>
-		<c:forEach var="railwayService" items="${railwayServices}">
-			<li>
-			<a href="${railwayService.url}">${railwayService.name}</a> 
-			<a href="#" data-url="railwayservice?edit&id=${railwayService.id}" class="edit-action">Редагувати</a> 
-			<form action="railwayservice" method="post">
-				<input type="hidden" name="delete"> 
-				<input type="hidden" name="id" value="${railwayService.id}"> 
-				<input type="submit" value="Видалити">
-			</form>
-			</li>
-		</c:forEach>
-	</ul>
-	<a href="railwayservice?add">Створити службу</a> |
-	<a href="/">На головну</a>
-	<div id='somediv'></div>
-</body>
+	<div id="nav">
+		<jsp:include page="../../include/nav.jsp" />
+	</div>
+	<div id="page-wrapper">
+		<div class="col-lg-12">
+			<h1 class="page-header">Служби Залізниці</h1>
+		</div>
+		<form class="form-inline">
+			<button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal" data-whatever="railwayservice?add">Нова служба</button>
+			<input id="myFilter" class="form-control" placeholder="Пошук...">
+    	</form>
+		<ul class="list-group">
+			<c:forEach var="railwayService" items="${railwayServices}">
+			    <li class="list-group-item">
+					<a href="${railwayService.url}" class="btn btn-default btn-md" >${railwayService.name}</a>
+					<button class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-whatever="railwayservice?edit&id=${railwayService.id}">Редагувати</button>
+					<a class="btn btn-danger" onclick="return confirm('Ви впевнені, що бажаєте видалити запис?')" role="button" href="railwayservice?delete&id=${railwayService.id}">Видалити</a>
+				</li>
+			</c:forEach>	
+		</ul>		
+	</div>
+	<div id="modal">
+			<jsp:include page="../../include/modal.jsp" />
+    </div>
 <script>
- $(".edit-action").click(
-			function(event) {
-				event.preventDefault();
-				$("#somediv").load($(this).data("url")).dialog({modal:true}); 
-			});
+$(function() {
+    $('#myFilter').fastLiveFilter('.list-group');
+});
 </script>
+<script src="/resources/js/fastLiveFilter.js"></script>
+</body>
 </html>

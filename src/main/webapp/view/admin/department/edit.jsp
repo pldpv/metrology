@@ -16,9 +16,9 @@
 		<input type="submit" value="Редагувати">
 	</form>
 	<form action="department" method="post">
-		<input type="hidden" name="delete"> <input type="hidden"
-			name="id" value="${department.id}"> <input type="submit"
-			value="Видалити">
+		<input type="hidden" name="delete"> 
+		<input type="hidden" name="id" value="${department.id}"> 
+		<input type="submit" value="Видалити">
 	</form>
 	<a href="${department.company.url}">Назад до ${department.company.name}</a>
 </body>

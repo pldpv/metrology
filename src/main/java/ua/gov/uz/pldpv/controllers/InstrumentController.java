@@ -1,12 +1,8 @@
 package ua.gov.uz.pldpv.controllers;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.annotation.security.RolesAllowed;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import ua.gov.uz.pldpv.entities.Company;
-import ua.gov.uz.pldpv.entities.Department;
 import ua.gov.uz.pldpv.entities.Instrument;
+import ua.gov.uz.pldpv.repositories.CheckDepartmentRepository;
+import ua.gov.uz.pldpv.repositories.CheckOrganizationRepository;
 import ua.gov.uz.pldpv.repositories.CompanyRepository;
 import ua.gov.uz.pldpv.repositories.InstrumentCategoryRepository;
 import ua.gov.uz.pldpv.repositories.InstrumentRepository;
@@ -35,20 +31,25 @@ public class InstrumentController {
 	InstrumentCategoryRepository instrumentCategoryRepository;
 	@Autowired
 	SphereOfUseRepository sphereOfUseRepository;
+	@Autowired
+	CheckDepartmentRepository checkDepartmentRepository;
+	@Autowired
+	CheckOrganizationRepository checkOrganizationRepository;  
 	
 	@Autowired
 		AccessConfirmationController accessConfirmation;
 	
 	@RequestMapping(params="add",method=RequestMethod.GET)
 	public String getAddInstrument(Model model){
-		System.out.println("Before service");
+		
 		model.addAttribute("railwayServices",accessConfirmation.getUsersRailwayServices());
-		System.out.println("Before company");
 		model.addAttribute("companies", accessConfirmation.getUserCompanies());
-		System.out.println("Before category");
 		model.addAttribute("instrumentCategories",instrumentCategoryRepository.findAll());
-		System.out.println("Before sphere");
 		model.addAttribute("spheresOfUse",sphereOfUseRepository.findAll());
+		model.addAttribute("verificationOrganization",checkOrganizationRepository.findByCheckType(1));
+		model.addAttribute("calibrationOrganization",checkOrganizationRepository.findByCheckType(0));
+		model.addAttribute("checkOrganization",checkOrganizationRepository.findByCheckType(2));
+		model.addAttribute("checkDepartment",checkDepartmentRepository.findAll());
 		return "instrument/add";
 	}
 	

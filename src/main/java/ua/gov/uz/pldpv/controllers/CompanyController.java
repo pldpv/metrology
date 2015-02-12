@@ -58,7 +58,7 @@ public class CompanyController {
 		Company company = new Company(name, director, null, null,
 				railwayService);
 		company = companyRepository.save(company);
-		return "redirect:" + company.getUrl();
+		return  "redirect:"+company.getRailwayService().getUrl();
 	}
 
 	@RequestMapping(params = "edit", method = RequestMethod.POST)
@@ -74,7 +74,7 @@ public class CompanyController {
 	@RequestMapping(params = "delete", method = RequestMethod.POST)
 	public String postDeleteCompany(@RequestParam long id) {
 		Company company=companyRepository.findOne(id);
-		companyRepository.delete(company);
+		companyRepository.delete(id);
 		return "redirect:"+company.getRailwayService().getUrl();
 	}
 }

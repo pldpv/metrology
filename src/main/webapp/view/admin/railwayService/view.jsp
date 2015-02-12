@@ -6,14 +6,40 @@
 <title>${railwayService.name}</title>
 </head>
 <body>
-	<h1>${railwayService.name}</h1>
-	<ul>
-		<c:forEach var="company" items="${railwayService.companies}">
-			<li><a href="${company.url}">${company.name}</a></li>
-		</c:forEach>
-	</ul>
-	<a href="${railwayService.url}&edit">Редагувати службу</a>|
-	<a href="company?add&railwayService_id=${railwayService.id}">Створити підприємство</a>|
-	<a href="railwayservice?list">До списку служб</a>
+	<div id="nav">
+		<jsp:include page="../../include/nav.jsp" />
+	</div>
+	<div id="page-wrapper">
+		<div class="col-lg-12">
+			<h1 class="page-header">${railwayService.name}</h1>
+		</div>
+		<form class="form-inline">
+			<button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal" data-whatever="company?add&railwayService_id=${railwayService.id}">Нове підприємство</button>
+			<input id="myFilter" class="form-control" placeholder="Пошук...">
+    	</form>
+		<ul class="list-group">
+			<c:forEach var="company" items="${railwayService.companies}">
+			    <li class="list-group-item">
+					<a href="${company.url}" class="btn btn-default btn-md" >${company.name}</a>
+					<button class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-whatever="company?edit&id=${company.id}">Редагувати</button>
+					<form action="company" method="post">
+						<input type="hidden" name="delete"> 
+						<input type="hidden" name="id" value="${company.id}"> 
+						<input type="submit" value="Видалити">
+					</form>
+					<a class="btn btn-danger" onclick="return confirm('Ви впевнені, що бажаєте видалити запис?')" role="button" href="company?delete&id=${company.id}">Видалити</a>
+				</li>
+			</c:forEach>	
+		</ul>		
+	</div>
+	<div id="modal">
+			<jsp:include page="../../include/modal.jsp" />
+    </div>
+<script>
+$(function() {
+    $('#myFilter').fastLiveFilter('.list-group');
+});
+</script>
+<script src="/resources/js/fastLiveFilter.js"></script>
 </body>
 </html>

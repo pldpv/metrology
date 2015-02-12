@@ -35,12 +35,9 @@ public class CheckDepartmentController {
 	InstrumentTypeRepository instrumentTypeRepo;
 	
 	@RequestMapping(params = "add", method = RequestMethod.GET)
-	public String getAddDepartment(
-			@RequestParam("company_id") long companyId,
-			Model model) {
-		if (!accessConfirmation.accessConfirmation(companyId)) throw new AccessDeniedException("You have no permissions");
-		model.addAttribute("company",
-				companyRepository.findOne(companyId));
+	public String getAddDepartment(Model model) {
+		model.addAttribute("railwayServices",accessConfirmation.getUsersRailwayServices());
+		model.addAttribute("companies", accessConfirmation.getUserCompanies());
 		model.addAttribute("instrumentType",instrumentTypeRepo.findAll());
 		return "admin/instrument/checkdepartment/add";
 	}

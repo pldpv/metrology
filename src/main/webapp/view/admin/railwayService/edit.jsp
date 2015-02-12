@@ -5,21 +5,27 @@
 <title>Редагування ${railwayService.name}</title>
 </head>
 <body>
-	<h1>Редагування ${railwayService.name}</h1>
-	<form action="railwayservice" method="post">
+	<form  class="form-horizontal" action="railwayservice" method="post">
 		<input type="hidden" name="edit"> 
 		<input type="hidden" name="id" value="${railwayService.id}">
-		<ul>
-			<li>Назва: <input type="text" name="name" value="${railwayService.name}"></li>
-			<li>Начальник служби: <input type="text" name="director" value="${railwayService.director}"></li>
-		</ul>
-		<input type="submit" value="Редагувати">
+		<div class="form-group form-group-sm">
+			<label class="control-label col-sm-4" for="inputName">Назва</label> 
+			<div class="col-sm-8">
+				<input class="form-control" type="text" id="inputName" name="name" value="${railwayService.name}" autocomplete="off">
+			</div>
+		</div> 
+		<div class="form-group form-group-sm">
+			<label class="control-label col-sm-4" for="inputDirector">Начальник	служби</label> 
+			<div class="col-sm-8">
+				<input class="form-control" type="text" id ="inputDirector" name="director" value="${railwayService.director}" autocomplete="off">
+			</div>
+		</div>
+		
+		<div class="form-group form-group-sm">
+			<div class="col-md-9 col-md-offset-9">
+				<button type="submit" class="btn btn-success">Зберегти</button>
+			</div>
+		</div>
 	</form>
-	<form action="railwayservice" method="post">
-		<input type="hidden" name="delete"> 
-		<input type="hidden" name="id" value="${railwayService.id}"> 
-		<input type="submit" value="Видалити">
-	</form>
-	<a href="railwayservice?list">До списку служб</a>
 </body>
 </html>

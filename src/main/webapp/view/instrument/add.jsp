@@ -17,10 +17,10 @@
 		<input type="hidden" name="add"> <input type="hidden"
 			name="department_id">
 		<p>
-			Служба: <select id="railwayServiceList" ></select>
+			Служба: <select id="railwayServiceList"></select>
 		</p>
 		<p>
-			Підприємство: <select id="companyList" ></select>
+			Підприємство: <select id="companyList"></select>
 		</p>
 		<p>
 			Відділ: <select id="departmentList" name="department_id" required></select>
@@ -30,10 +30,12 @@
 				name="instrumentCategory_id" required></select>
 		</p>
 		<p>
-			Назва ЗВТ: <select id="instrumentTypeList" name="instrumentType_id" required></select>
+			Назва ЗВТ: <select id="instrumentTypeList" name="instrumentType_id"
+				required></select>
 		</p>
 		<p>
-			Тип ЗВТ: <select id="instrumentModelList" name="instrumentModel_id" required>
+			Тип ЗВТ: <select id="instrumentModelList" name="instrumentModel_id"
+				required>
 			</select>
 		</p>
 		<p>
@@ -55,41 +57,53 @@
 				name="sphereOfUse_id" required>
 			</select>
 		</p>
-		<p>Технічний стан ЗВТ:<select id="technicalStateList"
+		<p>
+			Технічний стан ЗВТ:<select id="technicalStateList"
 				name="technicalState_id" required>
-			</select></p>
+			</select>
+		</p>
 		<p>
 			ЗВТ, що калібруються <input type="checkbox" id="calibrationCb">
 		</p>
 		<div id="calibration">
-			<p>Організація:<select id="calibrationOrganizationList"
-				name="calibrationOrganization_id" required>
-			</select></p>
 			<p>
-				Дата: <input type="text" id="calibrationDate" name="calibrationDate" >
+				Організація:<select id="calibrationOrganizationList"
+					name="calibrationOrganization_id" required>
+				</select>
+			</p>
+			<p>
+				Дата: <input type="text" id="calibrationDate" name="calibrationDate">
 			</p>
 			<p>
 				Фактична вартісь<input type="number" name="actualCostCalibration"
 					autocomplete="off">
 			</p>
-			<p>Номер рахунку та дата його видачі <input type="text" name="actualCostCalibration"
-					autocomplete="off"></p>
+			<p>
+				Номер рахунку та дата його видачі <input type="text"
+					name="actualCostCalibration" autocomplete="off">
+			</p>
 		</div>
-		
+
 		<p>
 			ЗВТ, що повіряються<input type="checkbox" id="verificationCb">
 		</p>
 		<div id="verification">
-		<p>Організація<select id="verificationOrganizationList"
-				name="verificationOrganization_id" required>
-			</select></p>
-		<p>
-			Дата<input type="text" id="verificationDate" name="verificationDate">
-		</p>
-		<p>Фактична вартісь<input type="number" name="actualCostVerification"
-					autocomplete="off"></p>
-		<p>Номер рахунку та дата його видачі<input type="text" name="actualCostVerification"
-					autocomplete="off"></p>
+			<p>
+				Організація<select id="verificationOrganizationList"
+					name="verificationOrganization_id">
+				</select>
+			</p>
+			<p>
+				Дата<input type="text" id="verificationDate" name="verificationDate">
+			</p>
+			<p>
+				Фактична вартісь<input type="number" name="actualCostVerification"
+					autocomplete="off">
+			</p>
+			<p>
+				Номер рахунку та дата його видачі<input type="text"
+					name="actualCostVerification" autocomplete="off">
+			</p>
 		</div>
 		<input type="submit" value="add">
 	</form>
@@ -108,7 +122,13 @@
 								.getElementById("departmentList");
 						var sphereOfUseList = document
 								.getElementById("sphereOfUseList");
+						var verificationOrganizationList = document
+						.getElementById("verificationOrganizationList");
+						var calibrationOrganizationList = document
+						.getElementById("calibrationOrganizationList");
 
+						
+						
 						<c:forEach items="${railwayServices}" var="service" varStatus="loopStatus">
 						var option = new Option("${service.name}", "${service}");
 						railwayServiceList.options.add(option);
@@ -158,6 +178,28 @@
 
 						</c:forEach>
 
+						<c:forEach items="${verificationOrganization}" var="verificationOrganization" varStatus="loopStatus">
+						var option = new Option(
+								"${verificationOrganization.name}",
+								"${verificationOrganization}");
+						verificationOrganizationList.options.add(option);
+						</c:forEach>
+
+						<c:forEach items="${calibrationOrganization}" var="calibrationOrganization" varStatus="loopStatus">
+						var option = new Option(
+								"${calibrationOrganization.name}",
+								"${calibrationOrganization}");
+						calibrationOrganizationList.options.add(option);
+						</c:forEach>
+						<c:forEach items="${checkOrganization}" var="checkOrganization" varStatus="loopStatus">
+						var option = new Option(
+								"${checkOrganization.name}",
+								"${checkOrganization}");
+						calibrationOrganizationList.options.add(option);
+						verificationOrganizationList.options.add(option);
+						</c:forEach>
+
+
 						$("#companyList").chained("#railwayServiceList");
 						$("#departmentList").chained("#companyList");
 						$("#instrumentTypeList").chained(
@@ -170,22 +212,27 @@
 							$('#produtionYear').append(
 									$('<option />').val(i).html(i));
 						}
-						$('#receiptDate').datepicker({maxDate:new Date()});
-						$('#calibrationDate').datepicker({maxDate:new Date()});
-						$('#verificationDate').datepicker({maxDate:new Date()});
-						checkInstrument("calibrationCb","calibration");
-						checkInstrument("verificationCb","verification")
+						$('#receiptDate').datepicker({
+							maxDate : new Date()
+						});
+						$('#calibrationDate').datepicker({
+							maxDate : new Date()
+						});
+						$('#verificationDate').datepicker({
+							maxDate : new Date()
+						});
+						checkInstrument("calibrationCb", "calibration");
+						checkInstrument("verificationCb", "verification")
 					});
-	function checkInstrument(checkBoxId,divClass){
-			$('#'+divClass).hide();
-			$('#'+checkBoxId).change(function () {
-		        if (!this.checked)
-		           $('#'+divClass).fadeOut('slow');
-		        else 
-		            $('#'+divClass).fadeIn('slow');
-		    });
+	function checkInstrument(checkBoxId, divClass) {
+		$('#' + divClass).hide();
+		$('#' + checkBoxId).change(function() {
+			if (!this.checked)
+				$('#' + divClass).fadeOut('slow');
+			else
+				$('#' + divClass).fadeIn('slow');
+		});
 
 	}
-	
 </script>
 </html>

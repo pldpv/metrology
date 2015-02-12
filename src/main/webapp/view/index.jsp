@@ -1,14 +1,16 @@
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<html>
-<head>
-<title>АРМ Метрологія</title>
-<jsp:include page="include/common_css.jsp"/>
-</head>
+<html lang="en">
 <body>
-	<div id="header">
-		<jsp:include page="include/header.jsp" />
+	<div id="nav">
+		<jsp:include page="include/nav.jsp" />
 	</div>
+	<div id="page-wrapper">
+		<p>Some Text here</p>
+	</div>
+	<!-- /#page-wrapper -->
+
 </body>
+
 </html>

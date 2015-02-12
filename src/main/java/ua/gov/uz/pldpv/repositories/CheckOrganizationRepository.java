@@ -5,10 +5,12 @@
  */
 package ua.gov.uz.pldpv.repositories;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import ua.gov.uz.pldpv.entities.Organization;
 
 public interface CheckOrganizationRepository extends JpaRepository<Organization, Long> {
-	
+	List<Organization> findByCheckType(Integer checkType); 
 }
