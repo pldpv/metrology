@@ -40,7 +40,8 @@ public class Instrument extends BaseEntity {
 	private Date productionYear;
 	@Column
 	private String instrumentModel;
-	@ManyToOne
+	
+	@ManyToOne(optional=false)
 	private Department department;
 
 	@ManyToOne

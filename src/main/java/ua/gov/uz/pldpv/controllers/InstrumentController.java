@@ -55,13 +55,13 @@ public class InstrumentController {
 	
 	@RequestMapping(params="all",method=RequestMethod.GET)
 	public String getAllInstrument(Model model){
-		model.addAttribute("instruments",instrumentRepository.findByDepartmentIn(accessConfirmation.getDepartmentsForAuthenticateUser()));
+		model.addAttribute("instruments",instrumentRepository.findByDepartmentIn(accessConfirmation.getUsersDepartments()));
 		return "instrument/list";
 	}
 	@RequestMapping(params="edit",method=RequestMethod.GET)
 	public String getEditInstrument(@RequestParam Long id,Model model){
 		Instrument instrument=instrumentRepository.findOne(id);
-		if (!accessConfirmation.accessConfirmation(instrument.getDepartment().getCompany().getId()))
+		if (!accessConfirmation.accessConfirm(instrument.getDepartment().getCompany()))
 			throw new AccessDeniedException("You have no permissions");
 		
 		model.addAttribute("instrument",instrument);
@@ -71,7 +71,7 @@ public class InstrumentController {
 	@RequestMapping(params="view",method=RequestMethod.GET)
 	public String getViewInstrument(@RequestParam Long id, Model model){
 		Instrument instrument=instrumentRepository.findOne(id);
-		if (!accessConfirmation.accessConfirmation(instrument.getDepartment().getCompany().getId()))
+		if (!accessConfirmation.accessConfirm(instrument.getDepartment().getCompany()))
 			throw new AccessDeniedException("You have no permissions");
 		model.addAttribute(instrument);
 		return "instrument/view";

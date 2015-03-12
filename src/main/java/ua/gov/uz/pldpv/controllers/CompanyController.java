@@ -30,22 +30,26 @@ public class CompanyController {
 	public String getAddCompany(
 			@RequestParam("railwayService_id") long railwayServiceId,
 			Model model) {
-		model.addAttribute("railwayService",
-				railwayServiceRepository.findOne(railwayServiceId));
+		RailwayService railwayService = railwayServiceRepository
+				.findOne(railwayServiceId);
+		if (!accessConfirmation.accessConfirm(railwayService)) throw new AccessDeniedException("You have no permissions");
+		model.addAttribute("railwayService",railwayService);
 		return "admin/company/add";
 	}
 	
 	@RequestMapping(params = "edit", method = RequestMethod.GET)
 	public String getEditCompany(@RequestParam long id, Model model) {
 		Company company = companyRepository.findOne(id);
+		if (!accessConfirmation.accessConfirm(company)) throw new AccessDeniedException("You have no permissions");
 		model.addAttribute("company", company);
 		return "admin/company/edit";
 	}
 	@RolesAllowed({"ADMIN","SERVICE_ADMIN","COMPANY_ADMIN"})
 	@RequestMapping(method = RequestMethod.GET)
 	public String getViewCompany(@RequestParam long id, Model model) {
-		if (!accessConfirmation.accessConfirmation(id)) throw new AccessDeniedException("You have no permissions");
-		model.addAttribute("company", companyRepository.findOne(id));
+		Company company=companyRepository.findOne(id);
+		if (!accessConfirmation.accessConfirm(company)) throw new AccessDeniedException("You have no permissions");
+		model.addAttribute("company",company );
 		return "admin/company/view";
 	}
 
@@ -55,6 +59,7 @@ public class CompanyController {
 			@RequestParam String name, @RequestParam String director) {
 		RailwayService railwayService = railwayServiceRepository
 				.findOne(railwayServiceId);
+		if (!accessConfirmation.accessConfirm(railwayService)) throw new AccessDeniedException("You have no permissions");
 		Company company = new Company(name, director, null, null,
 				railwayService);
 		company = companyRepository.save(company);
@@ -65,6 +70,7 @@ public class CompanyController {
 	public String postEditCompany(@RequestParam long id,
 			@RequestParam String name, @RequestParam String director) {
 		Company company = companyRepository.findOne(id);
+		if (!accessConfirmation.accessConfirm(company)) throw new AccessDeniedException("You have no permissions");
 		company.setName(name);
 		company.setDirector(director);
 		company = companyRepository.save(company);
@@ -74,6 +80,7 @@ public class CompanyController {
 	@RequestMapping(params = "delete", method = RequestMethod.POST)
 	public String postDeleteCompany(@RequestParam long id) {
 		Company company=companyRepository.findOne(id);
+		if (!accessConfirmation.accessConfirm(company)) throw new AccessDeniedException("You have no permissions");
 		companyRepository.delete(id);
 		return "redirect:"+company.getRailwayService().getUrl();
 	}

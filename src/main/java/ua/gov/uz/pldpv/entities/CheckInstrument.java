@@ -38,7 +38,7 @@ public abstract class CheckInstrument extends BaseEntity {
 
 	@Any(metaColumn = @Column(name = "organization"))
 	@AnyMetaDef(idType = "long", metaType = "string", metaValues = {
-			@MetaValue(targetEntity = CheckDepartment.class, value = "D"),
+			//@MetaValue(targetEntity = CheckDepartment.class, value = "D"),
 			@MetaValue(targetEntity = Organization.class, value = "O"), })
 	@JoinColumn(name = "organization_id")
 	private Object organization;

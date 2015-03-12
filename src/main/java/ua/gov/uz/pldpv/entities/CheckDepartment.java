@@ -19,7 +19,7 @@ public class CheckDepartment extends Department {
 		this.certificatePath = certificatePath;
 	}
 
-	@OneToMany
+	@OneToMany(mappedBy="checkDepartment")
 	private Set<InstrumentType> instrumentType;
 	
 	@Column

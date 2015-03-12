@@ -3,6 +3,7 @@ package ua.gov.uz.pldpv.controllers;
 import javax.annotation.security.RolesAllowed;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,17 +21,22 @@ public class RailwayServiceController {
 	
 	@Autowired
 	RailwayServiceRepository railwayServiceRepository;
+	@Autowired
+	AccessConfirmationController accessConfirmation;
 	
 	@RequestMapping(params = "list", method = RequestMethod.GET)
 	public String getRailwayServiceList(Model model) {
 		model.addAttribute("railwayServices",
-				railwayServiceRepository.findAll());
+				accessConfirmation.getUsersRailwayServices());
 		return "admin/railwayService/list";
 	}
 	
+	@RolesAllowed({"ADMIN","SERVICE_ADMIN"})
 	@RequestMapping(method = RequestMethod.GET)
 	public String getViewRailwayService(@RequestParam long id, Model model) {
-		model.addAttribute("railwayService", railwayServiceRepository.findOne(id));
+		RailwayService railwayService=railwayServiceRepository.findOne(id);
+		if(!accessConfirmation.accessConfirm(railwayService)) throw new AccessDeniedException("You have no permissions");
+		model.addAttribute("railwayService", railwayService);
 		return "admin/railwayService/view";
 	}
 	
@@ -62,7 +68,7 @@ public class RailwayServiceController {
 		return "redirect:railwayservice?list";
 	}
 	
-	@RequestMapping(params = "delete", method = RequestMethod.GET)
+	@RequestMapping(params = "delete", method = RequestMethod.POST)
 	public String postDeleteRailwayService(@RequestParam long id) {
 		railwayServiceRepository.delete(id);
 		return "redirect:railwayservice?list";

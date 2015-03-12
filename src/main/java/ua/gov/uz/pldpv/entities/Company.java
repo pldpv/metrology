@@ -22,13 +22,13 @@ public class Company extends UrlEntity {
 	@NotBlank
 	private String director;
 	
-	@OneToMany(mappedBy = "company",fetch=FetchType.EAGER,cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "company",fetch=FetchType.EAGER,cascade=CascadeType.ALL, orphanRemoval = true)
 	private Set<Department> departments;
 	
-	@OneToMany(mappedBy = "company",cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "company",cascade=CascadeType.ALL, orphanRemoval = true)
 	private Set<User> users;
 	
-	@ManyToOne(optional = false)
+	@ManyToOne
 	private RailwayService railwayService;
 
 	public Company() {

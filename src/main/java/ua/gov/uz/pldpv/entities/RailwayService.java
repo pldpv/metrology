@@ -1,5 +1,6 @@
 package ua.gov.uz.pldpv.entities;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -21,16 +22,16 @@ public class RailwayService extends UrlEntity {
 	@NotBlank
 	private String director;
 
-	@OneToMany(mappedBy = "railwayService",fetch=FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-	private Set<Company> companies;
+	@OneToMany(mappedBy = "railwayService",fetch=FetchType.EAGER,cascade=CascadeType.ALL, orphanRemoval = true)
+	private List<Company> companies;
 	
-	@OneToMany(mappedBy = "railwayService",cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "railwayService",cascade=CascadeType.ALL, orphanRemoval = true)
 	private Set<User> users;
 	
 	public RailwayService() {
 	}
 
-	public RailwayService(String name, String director, Set<Company> companies) {
+	public RailwayService(String name, String director, List<Company> companies) {
 		this.name = name;
 		this.director = director;
 		this.companies = companies;
@@ -52,11 +53,11 @@ public class RailwayService extends UrlEntity {
 		this.director = director;
 	}
 
-	public Set<Company> getCompanies() {
+	public List<Company> getCompanies() {
 		return companies;
 	}
 
-	public void setCompanies(Set<Company> companies) {
+	public void setCompanies(List<Company> companies) {
 		this.companies = companies;
 	}
 

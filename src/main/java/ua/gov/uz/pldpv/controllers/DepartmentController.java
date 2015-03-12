@@ -35,7 +35,8 @@ public class DepartmentController {
 	public String getAddDepartment(
 			@RequestParam("company_id") long companyId,
 			Model model) {
-		if (!accessConfirmation.accessConfirmation(companyId)) throw new AccessDeniedException("You have no permissions");
+		Company company=companyRepository.findOne(companyId);
+		if (!accessConfirmation.accessConfirm(company)) throw new AccessDeniedException("You have no permissions");
 		model.addAttribute("company",
 				companyRepository.findOne(companyId));
 		return "admin/department/add";
@@ -43,10 +44,8 @@ public class DepartmentController {
 	
 	@RequestMapping(params = "edit", method = RequestMethod.GET)
 	public String getEditDepartment(@RequestParam long id, Model model) {
-		
 		Department department = departmentRepository.findOne(id);
-		if(!accessConfirmation.accessConfirmation(department.getCompany().getId())) throw new AccessDeniedException("You have no permissions");
-		
+		if(!accessConfirmation.accessConfirm(department)) throw new AccessDeniedException("You have no permissions");
 		model.addAttribute("department", department);
 		return "admin/department/edit";
 	}
@@ -54,7 +53,7 @@ public class DepartmentController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String getViewDepartment(@RequestParam long id, Model model) {
 		Department department=departmentRepository.findOne(id);
-		if(!accessConfirmation.accessConfirmation(department.getCompany().getId())) throw new AccessDeniedException("You have no permissions");
+		if(!accessConfirmation.accessConfirm(department)) throw new AccessDeniedException("You have no permissions");
 		model.addAttribute("department", department);
 		return "admin/department/view";
 	}
@@ -63,13 +62,12 @@ public class DepartmentController {
 	public String postAddCompany(
 			@RequestParam("company_id") long companyId,
 			@RequestParam String name, @RequestParam String director) {
-		if(!accessConfirmation.accessConfirmation(companyId)) throw new AccessDeniedException("You have no permissions");
-		Company company = companyRepository
-				.findOne(companyId);
+		Company company=companyRepository.findOne(companyId);
+		if(!accessConfirmation.accessConfirm(company)) throw new AccessDeniedException("You have no permissions");
 		Department department = new Department(name, director, null,
 				company);
 		department = departmentRepository.save(department);
-		return "redirect:" + department.getUrl();
+		return "redirect:" + department.getCompany().getUrl();
 		
 	}
 
@@ -77,18 +75,18 @@ public class DepartmentController {
 	public String postEditCompany(@RequestParam long id,
 			@RequestParam String name, @RequestParam String director) {
 		Department department = departmentRepository.findOne(id);
-		if(!accessConfirmation.accessConfirmation(department.getCompany().getId())) throw new AccessDeniedException("You have no permissions");
+		if(!accessConfirmation.accessConfirm(department)) throw new AccessDeniedException("You have no permissions");
 		department.setName(name);
 		department.setDirector(director);
 		department = departmentRepository.save(department);
-		return "redirect:" + department.getUrl();
+		return "redirect:" + department.getCompany().getUrl();
 	}
 
 	@RequestMapping(params = "delete", method = RequestMethod.POST)
 	public String postDeleteCompany(@RequestParam long id) {
 		Department department=departmentRepository.findOne(id);
-		if(!accessConfirmation.accessConfirmation(department.getCompany().getId())) throw new AccessDeniedException("You have no permissions");
-		departmentRepository.delete(department);
+		if(!accessConfirmation.accessConfirm(department)) throw new AccessDeniedException("You have no permissions");
+		departmentRepository.delete(id);
 		return "redirect:"+department.getCompany().getUrl();
 	}
 }

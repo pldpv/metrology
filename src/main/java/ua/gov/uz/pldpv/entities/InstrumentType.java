@@ -2,6 +2,7 @@ package ua.gov.uz.pldpv.entities;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -26,11 +27,21 @@ public class InstrumentType extends UrlEntity {
 	@Column
 	private String instrumentType;
 
+	public CheckDepartment getCheckDepartment() {
+		return checkDepartment;
+	}
+
+	public void setCheckDepartment(CheckDepartment checkDepartment) {
+		this.checkDepartment = checkDepartment;
+	}
+
 	@ManyToOne
 	private InstrumentCategory instrumentCategory;
 	
 	@OneToMany(mappedBy = "instrumentType")
 	Set<InstrumentModel> instrumentModel;
+	@ManyToOne(cascade=CascadeType.ALL)
+	CheckDepartment checkDepartment;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
 	private SphereOfUse sphereOfUse;

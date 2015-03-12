@@ -17,17 +17,16 @@
 			<button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal" data-whatever="company?add&railwayService_id=${railwayService.id}">Нове підприємство</button>
 			<input id="myFilter" class="form-control" placeholder="Пошук...">
     	</form>
-		<ul class="list-group">
+		<ul class="list-group" class="list-inline">
 			<c:forEach var="company" items="${railwayService.companies}">
-			    <li class="list-group-item">
-					<a href="${company.url}" class="btn btn-default btn-md" >${company.name}</a>
+			    <li class="list-group-item"> 
+			    	<a href="${company.url}" class="btn btn-default btn-md" >${company.name}</a>
 					<button class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-whatever="company?edit&id=${company.id}">Редагувати</button>
-					<form action="company" method="post">
-						<input type="hidden" name="delete"> 
-						<input type="hidden" name="id" value="${company.id}"> 
-						<input type="submit" value="Видалити">
+					<form  action="company" method="post">
+						<input type="hidden" name="delete"/> 
+						<input type="hidden" name="id" value="${company.id}"/> 
+						<input type="submit" onclick="return confirm('Ви впевнені, що бажаєте видалити запис?')" class ="btn btn-danger" value="Видалити"/>
 					</form>
-					<a class="btn btn-danger" onclick="return confirm('Ви впевнені, що бажаєте видалити запис?')" role="button" href="company?delete&id=${company.id}">Видалити</a>
 				</li>
 			</c:forEach>	
 		</ul>		

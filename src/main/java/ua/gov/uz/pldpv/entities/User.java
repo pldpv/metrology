@@ -21,11 +21,11 @@ public class User extends BaseEntity {
 	@ManyToOne(optional=false)
 	private Role role;
 
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "company_id")
 	private Company company;
 
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "railwayService_id")
 	private RailwayService railwayService;
 

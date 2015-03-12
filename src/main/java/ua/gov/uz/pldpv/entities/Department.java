@@ -24,10 +24,10 @@ public class Department extends UrlEntity {
 	@NotBlank
 	private String director;
 
-	@OneToMany(mappedBy = "department", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "department", cascade=CascadeType.ALL, orphanRemoval = true)
 	private Set<Instrument> instruments;
 
-	@ManyToOne(optional = false)
+	@ManyToOne(optional= false)
 	private Company company;
 
 	public Department() {

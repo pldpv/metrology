@@ -20,9 +20,13 @@
 		<ul class="list-group">
 			<c:forEach var="railwayService" items="${railwayServices}">
 			    <li class="list-group-item">
-					<a href="${railwayService.url}" class="btn btn-default btn-md" >${railwayService.name}</a>
-					<button class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-whatever="railwayservice?edit&id=${railwayService.id}">Редагувати</button>
-					<a class="btn btn-danger" onclick="return confirm('Ви впевнені, що бажаєте видалити запис?')" role="button" href="railwayservice?delete&id=${railwayService.id}">Видалити</a>
+			    	<a href="${railwayService.url}" class="btn btn-default btn-md" >${railwayService.name}</a>
+					<button class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-whatever="railwayservice?edit&id=${railwayService.id}">Редагувати</button>						
+					<form  action="railwayservice" style="display: inline-block;margin:0;" method="post">
+						<input type="hidden" name="delete"/> 
+						<input type="hidden" name="id" value= "${railwayService.id}"/> 
+						<input type="submit" onclick="return confirm('Ви впевнені, що бажаєте видалити запис?')" class ="btn btn-danger" value="Видалити"/>
+					</form>
 				</li>
 			</c:forEach>	
 		</ul>		
