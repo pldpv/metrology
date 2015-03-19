@@ -31,15 +31,34 @@ class AccessConfirmationController {
 	 * @return true if authenticated User contains Company for Request companyId
 	 */
 	boolean accessConfirm(Company company) {
-		return getUserCompanies().contains(company);
+		SecurityUser user = getSecurityUser();
+		String roleName = user.getRole().getRoleName();
+		if (roleName.equals("ADMIN")) {
+			return true;
+		} else {
+			return user.getRailwayService().getCompanies().contains(company);
+		}
 	}
 
 	boolean accessConfirm(RailwayService railwayService) {
-		return getUsersRailwayServices().contains(railwayService);
+		SecurityUser user = getSecurityUser();
+		String roleName = user.getRole().getRoleName();
+		if (roleName.equals("ADMIN")) {
+			return true;
+		} else {
+			return user.getRailwayService().equals(railwayService);
+		}
 	}
 
 	boolean accessConfirm(Department department) {
-		return getUsersDepartments().contains(department);
+		SecurityUser user = getSecurityUser();
+		String roleName = user.getRole().getRoleName();
+		if (roleName.equals("ADMIN")) {
+			return true;
+		} else {
+			return user.getRailwayService().getCompanies()
+					.contains(department.getCompany());
+		}
 	}
 
 	/**
@@ -57,7 +76,7 @@ class AccessConfirmationController {
 		} else if (roleName.equals("SERVICE_ADMIN")) {
 			list.add(user.getRailwayService());
 		}
-			return list;
+		return list;
 	}
 
 	/**

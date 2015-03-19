@@ -289,13 +289,13 @@
                                     <a href="railwayservice?list">Редагування служб</a>
                                 </li>
                                 </sec:authorize>
-                                <sec:authorize access="hasRole('ADMIN')">
+                                <sec:authorize access="hasAnyRole('ADMIN','SERVICE_ADMIN')">
                                 <li>
-                                    <a href="buttons.html">Редагування підриємств</a>
+                                    <a href="company?list">Редагування підриємств</a>
                                 </li>
                                 </sec:authorize>
                                 <li>
-                                    <a href="notifications.html">Редагування відділів</a>
+                                    <a href="department?list">Редагування відділів</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->

@@ -3,6 +3,7 @@ package ua.gov.uz.pldpv.entities;
 import java.util.Date;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -47,7 +48,7 @@ public class Instrument extends BaseEntity {
 	@ManyToOne
 	private InstrumentType instrumentType;
 	
-	@OneToMany(mappedBy="instrument",fetch =FetchType.EAGER)
+	@OneToMany(mappedBy="instrument",cascade=CascadeType.ALL,fetch =FetchType.EAGER)
 	@OrderColumn(name="currentCheck")
 	private Set<CheckInstrument> instrumentCheck;
 	

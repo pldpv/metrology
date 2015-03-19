@@ -38,12 +38,13 @@ public class InstrumentType extends UrlEntity {
 	@ManyToOne
 	private InstrumentCategory instrumentCategory;
 	
-	@OneToMany(mappedBy = "instrumentType")
+	@OneToMany(mappedBy = "instrumentType",cascade=CascadeType.ALL)
 	Set<InstrumentModel> instrumentModel;
-	@ManyToOne(cascade=CascadeType.ALL)
+	
+	@ManyToOne
 	CheckDepartment checkDepartment;
 	
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne
 	private SphereOfUse sphereOfUse;
 
 	public String getInstrumentType() {

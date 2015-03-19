@@ -22,7 +22,7 @@
 			    <li class="list-group-item"> 
 			    	<a href="${company.url}" class="btn btn-default btn-md" >${company.name}</a>
 					<button class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-whatever="company?edit&id=${company.id}">Редагувати</button>
-					<form  action="company" method="post">
+					<form  action="company" style="display: inline-block;margin:0;" method="post">
 						<input type="hidden" name="delete"/> 
 						<input type="hidden" name="id" value="${company.id}"/> 
 						<input type="submit" onclick="return confirm('Ви впевнені, що бажаєте видалити запис?')" class ="btn btn-danger" value="Видалити"/>

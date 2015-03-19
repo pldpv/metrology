@@ -2,6 +2,7 @@ package ua.gov.uz.pldpv.entities;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -21,7 +22,7 @@ public class InstrumentCategory extends UrlEntity {
 	@Column
 	private String category;
 	
-	@OneToMany(mappedBy = "instrumentCategory")
+	@OneToMany(mappedBy = "instrumentCategory",cascade=CascadeType.ALL)
 	private Set<InstrumentType> instrumentType;
 
 	public String getCategory() {

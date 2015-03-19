@@ -22,7 +22,7 @@ public class RailwayService extends UrlEntity {
 	@NotBlank
 	private String director;
 
-	@OneToMany(mappedBy = "railwayService",fetch=FetchType.EAGER,cascade=CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "railwayService",cascade=CascadeType.ALL, orphanRemoval = true)
 	private List<Company> companies;
 	
 	@OneToMany(mappedBy = "railwayService",cascade=CascadeType.ALL, orphanRemoval = true)

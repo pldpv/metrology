@@ -2,6 +2,7 @@ package ua.gov.uz.pldpv.entities;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -21,7 +22,7 @@ public class SphereOfUse extends BaseEntity {
 	@Column
 	private String sphereOfUse;
 
-	@OneToMany(mappedBy = "sphereOfUse", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "sphereOfUse", fetch = FetchType.EAGER,cascade=CascadeType.ALL)
 	private Set<InstrumentType> instrumenType;
 
 	public String getSphereOfUse() {

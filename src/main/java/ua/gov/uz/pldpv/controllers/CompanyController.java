@@ -26,6 +26,12 @@ public class CompanyController {
 	@Autowired
 	CompanyRepository companyRepository;
 	
+	@RequestMapping(params = "list", method = RequestMethod.GET)
+	public String getRailwayServiceList(Model model) {
+		model.addAttribute("railwayService",
+				accessConfirmation.getUsersRailwayServices());
+		return "admin/company/list";
+	}
 	@RequestMapping(params = "add", method = RequestMethod.GET)
 	public String getAddCompany(
 			@RequestParam("railwayService_id") long railwayServiceId,
@@ -49,7 +55,7 @@ public class CompanyController {
 	public String getViewCompany(@RequestParam long id, Model model) {
 		Company company=companyRepository.findOne(id);
 		if (!accessConfirmation.accessConfirm(company)) throw new AccessDeniedException("You have no permissions");
-		model.addAttribute("company",company );
+		model.addAttribute("company",company);
 		return "admin/company/view";
 	}
 

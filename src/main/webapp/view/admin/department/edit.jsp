@@ -5,21 +5,27 @@
 <title>Редагування ${department.name}</title>
 </head>
 <body>
-	<h1>Редагування ${department.name}</h1>
-	<form action="department" method="post">
+		<form  class="form-horizontal" action="company" method="post">
 		<input type="hidden" name="edit"> 
 		<input type="hidden" name="id" value="${department.id}">
-		<ul>
-			<li>Назва відділу: <input type="text" name="name" value="${department.name}"></li>
-			<li>Начальник відділу: <input type="text" name="director" value="${department.director}"></li>
-		</ul>
-		<input type="submit" value="Редагувати">
+		<div class="form-group form-group-sm">
+			<label class="control-label col-sm-4" for="inputName">Назва</label> 
+			<div class="col-sm-8">
+				<input class="form-control" type="text" id="inputName" name="name" value="${department.name}" autocomplete="off">
+			</div>
+		</div> 
+		<div class="form-group form-group-sm">
+			<label class="control-label col-sm-4" for="inputDirector">Начальник	відділу</label> 
+			<div class="col-sm-8">
+				<input class="form-control" type="text" id ="inputDirector" name="director" value="${department.director}" autocomplete="off">
+			</div>
+		</div>
+		
+		<div class="form-group form-group-sm">
+			<div class="col-md-9 col-md-offset-9">
+				<button type="submit" class="btn btn-success">Зберегти</button>
+			</div>
+		</div>
 	</form>
-	<form action="department" method="post">
-		<input type="hidden" name="delete"> 
-		<input type="hidden" name="id" value="${department.id}"> 
-		<input type="submit" value="Видалити">
-	</form>
-	<a href="${department.company.url}">Назад до ${department.company.name}</a>
 </body>
 </html>

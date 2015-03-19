@@ -18,10 +18,14 @@
     	</form>
 		<ul class="list-group">
 			<c:forEach var="department" items="${company.departments}">
-			    <li class="list-group-item">
-					<a href="${department.url}" class="btn btn-default btn-md" >${department.name}</a>
-					<button class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-whatever="department?edit&id=${department.id}">Редагувати</button>
-					<a class="btn btn-danger" onclick="return confirm('Ви впевнені, що бажаєте видалити запис?')" role="button" href="department?delete&id=${department.id}">Видалити</a>
+				<li class="list-group-item"> 
+			    	<p class="btn btn-default btn-md" >${department.name}</p>
+					<button class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-whatever="department?edit&id=${company.id}">Редагувати</button>
+					<form  action="department" style="display: inline-block;margin:0;" method="post">
+						<input type="hidden" name="delete"/> 
+						<input type="hidden" name="id" value="${department.id}"/> 
+						<input type="submit" onclick="return confirm('Ви впевнені, що бажаєте видалити запис?')" class ="btn btn-danger" value="Видалити"/>
+					</form>
 				</li>
 			</c:forEach>	
 		</ul>		
