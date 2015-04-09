@@ -8,7 +8,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
@@ -26,6 +28,7 @@ public class RailwayService extends UrlEntity {
 	private List<Company> companies;
 	
 	@OneToMany(mappedBy = "railwayService",cascade=CascadeType.ALL, orphanRemoval = true)
+	@JsonIgnore
 	private Set<User> users;
 	
 	public RailwayService() {

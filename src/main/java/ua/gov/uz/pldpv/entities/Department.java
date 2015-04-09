@@ -10,6 +10,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
@@ -28,6 +29,7 @@ public class Department extends UrlEntity {
 	private Set<Instrument> instruments;
 
 	@ManyToOne(optional= false)
+	@JsonIgnore
 	private Company company;
 
 	public Department() {

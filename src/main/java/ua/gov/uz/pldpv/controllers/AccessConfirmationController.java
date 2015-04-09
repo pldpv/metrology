@@ -7,6 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import ua.gov.uz.pldpv.config.SecurityUser;
 import ua.gov.uz.pldpv.entities.Company;
@@ -16,6 +20,7 @@ import ua.gov.uz.pldpv.repositories.CompanyRepository;
 import ua.gov.uz.pldpv.repositories.RailwayServiceRepository;
 
 @Component
+@Controller
 class AccessConfirmationController {
 	@Autowired
 	private CompanyRepository companyRepository;
@@ -66,8 +71,8 @@ class AccessConfirmationController {
 	 * 
 	 * @return List<Company> for authenticated User from database
 	 */
-
-	List<RailwayService> getUsersRailwayServices() {
+	@RequestMapping(value="/usersRailwayServices",method = RequestMethod.GET)
+	@ResponseBody List<RailwayService> getUsersRailwayServices() {
 		List<RailwayService> list = new ArrayList<RailwayService>();
 		SecurityUser user = getSecurityUser();
 		String roleName = user.getRole().getRoleName();
@@ -84,8 +89,8 @@ class AccessConfirmationController {
 	 * 
 	 * @return List<Company> for authenticated User from database
 	 */
-
-	List<Company> getUserCompanies() {
+	@RequestMapping(value="/usersCompanies",method = RequestMethod.GET)
+	@ResponseBody List<Company> getUserCompanies() {
 		List<Company> list = new ArrayList<Company>();
 		SecurityUser user = getSecurityUser();
 		String roleName = user.getRole().getRoleName();
@@ -104,8 +109,8 @@ class AccessConfirmationController {
 	 * 
 	 * @return List<Department> for authenticated User from database
 	 */
-
-	List<Department> getUsersDepartments() {
+	@RequestMapping(value="/usersDepartments",method = RequestMethod.GET)
+	@ResponseBody List<Department> getUsersDepartments() {
 		List<Department> list = new ArrayList<Department>();
 		for (Company c : getUserCompanies()) {
 			list.addAll(c.getDepartments());

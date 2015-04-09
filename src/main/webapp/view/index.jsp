@@ -10,7 +10,6 @@
 		<p>Some Text here</p>
 	</div>
 	<!-- /#page-wrapper -->
-
 </body>
 
 </html>

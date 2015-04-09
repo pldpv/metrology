@@ -8,7 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
@@ -26,9 +28,11 @@ public class Company extends UrlEntity {
 	private Set<Department> departments;
 	
 	@OneToMany(mappedBy = "company", orphanRemoval = true)
+	@JsonIgnore
 	private Set<User> users;
 	
 	@ManyToOne
+	@JsonIgnore
 	private RailwayService railwayService;
 
 	public Company() {

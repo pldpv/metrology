@@ -7,7 +7,7 @@
 <body>
 	<form class="form-horizontal" action="department" method="post">
 		<input type="hidden" name="add"> 
-		<input type="hidden" name="comapny_id" value="${company.id}">
+		<input type="hidden" name="company_id" value="${company.id}">
 		<div class="form-group form-group-sm">
 			<label class="control-label col-sm-4" for="inputName">Назва</label> 
 			<div class="col-sm-8">
